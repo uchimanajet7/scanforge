@@ -1,0 +1,23 @@
+@layer components.scan {
+/* ============================================================================
+ * 結果カードアクション
+ * ========================================================================== */
+
+.inline-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.inline-copy-btn svg {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.inline-copy-label {
+  font-size: 0.82rem;
+}
+}

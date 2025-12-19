@@ -1,0 +1,17 @@
+@layer components.scan {
+/* ============================================================================
+ * クイック設定
+ * ============================================================================ */
+
+.scan-quick-settings {
+  --toggle-gap-inline: clamp(0.45rem, 0.9vw, 0.75rem);
+  --toggle-gap-block: clamp(0.5rem, 1vw, 1rem);
+  --toggle-min: clamp(12rem, 28vw, 18rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--toggle-min), max-content));
+  gap: var(--toggle-gap-block) var(--toggle-gap-inline);
+  grid-auto-flow: dense;
+  justify-content: flex-start;
+  width: 100%;
+}
+}

@@ -1,0 +1,84 @@
+@layer components.forms.uploader {
+  .uploader-dropzone {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    justify-items: stretch;
+    align-content: start;
+    text-align: left;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 90%, white 10%);
+    color: var(--color-text);
+    min-block-size: clamp(8rem, 24vh, 11rem);
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .uploader-dropzone[aria-disabled='true'] {
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .uploader-dropzone[data-state='hover'],
+  .uploader-dropzone[data-state='active'] {
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+    color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+
+  .uploader-dropzone:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+    outline-offset: 3px;
+  }
+
+  .uploader-dropzone[data-state='busy'] {
+    border-style: solid;
+    border-color: var(--color-border-strong);
+    opacity: 0.8;
+    cursor: progress;
+  }
+
+  .uploader-dropzone[data-state='error'] {
+    border-color: var(--color-danger, #ef4444);
+    background: color-mix(in srgb, var(--color-danger, #ef4444) 8%, var(--color-surface));
+    color: var(--color-danger, #ef4444);
+  }
+
+  .uploader-dropzone[data-state='success'],
+  .uploader-dropzone[data-state='ready'] {
+    border-color: var(--color-border-strong);
+    background: color-mix(in srgb, var(--color-success, #10b981) 10%, var(--color-surface));
+  }
+
+  .uploader-icon {
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .uploader-icon::before,
+  .uploader-icon::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    border-radius: 999px;
+  }
+
+  .uploader-icon::before {
+    inline-size: 1.5rem;
+    block-size: 2px;
+  }
+
+  .uploader-icon::after {
+    inline-size: 2px;
+    block-size: 1.5rem;
+  }
+}

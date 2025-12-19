@@ -1,0 +1,185 @@
+@layer components.buttons {
+/**
+ * ScanForge - ボタンコンポーネント
+ *
+ * ボタンのスタイル定義
+ */
+
+/* ============================================================================
+ * 基本ボタン
+ * ============================================================================ */
+
+button,
+.button {
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  padding: clamp(0.6rem, 2vw, 0.85rem) clamp(1rem, 4vw, 1.5rem);
+  font-weight: 600;
+  background: var(--color-surface-alt);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+button:hover:not(:disabled),
+button:focus-visible:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+@media screen {
+  button,
+  .button {
+    padding: clamp(0.6rem, 2.5vw, 0.9rem) clamp(1rem, 4vw, 1.75rem);
+  }
+}
+
+/* ============================================================================
+ * ボタンバリエーション
+ * ============================================================================ */
+
+/* プライマリボタン */
+.primary {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent-strong);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+}
+
+.primary:hover:not(:disabled),
+.primary:focus-visible:not(:disabled) {
+  box-shadow: 0 14px 26px rgba(37, 99, 235, 0.25);
+}
+
+/* セカンダリボタン */
+.secondary {
+  background: transparent;
+  border-color: var(--color-border-strong);
+}
+
+/* ターシャリボタン */
+.tertiary {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.55rem 1rem;
+}
+
+.tertiary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tertiary:hover:not(:disabled),
+.tertiary:focus-visible:not(:disabled) {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+/* リンクボタン */
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  padding: 0.2rem;
+}
+
+/* アイコンボタン */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  padding: 0.45rem 0.75rem;
+  line-height: 1;
+}
+
+.icon-btn span {
+  white-space: nowrap;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-btn.is-highlighted {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.icon-btn.is-highlighted:hover,
+.icon-btn.is-highlighted:focus-visible {
+  border-color: var(--color-accent-strong, var(--color-accent));
+  color: var(--color-accent-strong, var(--color-accent));
+  background: rgba(37, 99, 235, 0.18);
+}
+
+/* ============================================================================
+ * ボタン状態
+ * ============================================================================ */
+
+/* 危険ボタン */
+.primary.is-danger {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.primary.is-danger:hover:not(:disabled),
+.primary.is-danger:focus-visible:not(:disabled) {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.icon-btn.danger {
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+
+.icon-btn.danger:hover,
+.icon-btn.danger:focus-visible {
+  border-color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+
+/* 控えめボタン */
+.icon-btn.subtle {
+  border-color: var(--color-border);
+  background: var(--color-surface-alt);
+}
+
+/* ローディング状態 */
+.primary.is-loading {
+  position: relative;
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* ============================================================================
+ * アクションボタン
+ * ============================================================================ */
+
+.action-btn {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ============================================================================
+ * モバイル対応
+ * ============================================================================ */
+
+@media (width < 40rem) {
+  .action-btn {
+    width: 100%;
+    min-width: 100%;
+  }
+}
+}

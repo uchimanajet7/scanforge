@@ -1,0 +1,139 @@
+@layer components.generate {
+  .logo-section-group {
+    display: grid;
+    gap: 0.5rem;
+    align-self: start;
+    min-inline-size: 0;
+    inline-size: 100%;
+    justify-self: stretch;
+    margin-top: 0;
+  }
+
+  .logo-color-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-color-heading-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+  }
+
+  .logo-toggle-row,
+  .logo-priority-toggle-row {
+    display: flex;
+    gap: 1rem;
+    padding: clamp(0.25rem, 1vw, 0.5rem) 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .logo-toggle,
+  .logo-priority-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    inline-size: 100%;
+  }
+
+  .logo-toggle-text,
+  .logo-priority-toggle-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+  }
+
+  .logo-toggle-title,
+  .logo-priority-toggle-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .logo-toggle-desc,
+  .logo-priority-toggle-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .logo-toggle .quick-switch-control,
+  .logo-priority-toggle .quick-switch-control {
+    margin: 0;
+  }
+
+  .logo-toggle .quick-switch-input,
+  .logo-priority-toggle .quick-switch-input {
+    cursor: pointer;
+  }
+
+  .logo-color-section {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+    inline-size: 100%;
+  }
+
+  .logo-section-group .logo-color-section {
+    margin-top: 0;
+  }
+
+  .logo-color-header {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .logo-color-header h3 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .logo-color-summary {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .logo-color-body {
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1.1rem);
+  }
+
+  .logo-headline {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .logo-description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .logo-summary {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+  }
+}

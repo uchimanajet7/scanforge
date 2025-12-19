@@ -1,0 +1,27 @@
+@layer components.generate {
+/* ============================================================================
+ * アクション
+ * ============================================================================ */
+
+.generate-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  margin-block: clamp(1rem, 2vh, 1.25rem) 0;
+  max-inline-size: min(24rem, 100%);
+  margin-inline: auto;
+}
+
+.generate-actions .primary,
+.generate-actions .secondary {
+  min-inline-size: 11rem;
+  max-inline-size: 14rem;
+  min-height: 2.75rem;
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
+}

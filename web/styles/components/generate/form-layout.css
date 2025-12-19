@@ -1,0 +1,34 @@
+@layer components.generate {
+/* ============================================================================
+ * フォームレイアウト
+ * ============================================================================ */
+
+.generate-form {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  container: generate / inline-size;
+}
+.form-grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: 100%;
+  max-width: 100%;
+}
+
+.generate-primary-row {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: start;
+  width: 100%;
+  max-width: 100%;
+}
+
+.generate-primary-row > * {
+  min-inline-size: 0;
+  max-width: 100%;
+}
+}

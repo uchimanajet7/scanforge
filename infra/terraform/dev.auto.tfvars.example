@@ -1,0 +1,12 @@
+aws_region        = "ap-northeast-1"
+function_name     = "scanforge-api"
+alias_name        = "prod"
+architecture      = "arm64"
+lambda_timeout_seconds = 10
+lambda_memory_mb  = 512
+lambda_tmp_mb     = 512
+log_retention_days = 14
+enable_snapstart   = true
+layer_zip_path     = "build/scanforge-layer.zip"
+existing_layer_arn = ""
+cors_allow_origins = ["*"]

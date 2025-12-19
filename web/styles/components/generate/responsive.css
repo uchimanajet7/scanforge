@@ -1,0 +1,45 @@
+@layer components.generate {
+/* ============================================================================
+ * レスポンシブ
+ * ============================================================================ */
+
+@container generate (max-width: 42rem) {
+  .generate-actions {
+    flex-direction: column;
+    align-items: stretch;
+    max-inline-size: none;
+    margin-inline: 0;
+  }
+
+  .generate-actions .primary,
+  .generate-actions .secondary {
+    max-inline-size: none;
+    flex: 1 1 100%;
+  }
+}
+
+@container screen (width >= 48rem) {
+  .generate-primary-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .logo-section-group {
+    inline-size: 100%;
+    justify-self: stretch;
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @media (width >= 48rem) {
+    .generate-primary-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .logo-section-group {
+      justify-self: stretch;
+      inline-size: 100%;
+    }
+  }
+}

@@ -1,0 +1,164 @@
+@layer components.scan {
+  .scan-import-job {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .scan-import-job.is-alt:not([data-status="success"]):not([data-status="failed"]):not([data-status="canceled"]) {
+    background: rgba(37, 99, 235, 0.06);
+    background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  }
+
+  .scan-import-job[data-status="success"] {
+    border-color: rgba(5, 150, 105, 0.45);
+    background: rgba(5, 150, 105, 0.08);
+  }
+
+  .scan-import-job[data-status="failed"] {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.08);
+  }
+
+  .scan-import-job[data-status="canceled"] {
+    border-color: rgba(107, 114, 128, 0.4);
+    background: rgba(107, 114, 128, 0.08);
+  }
+
+  .scan-import-job-thumb {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: var(--radius-xs);
+    background: rgba(37, 99, 235, 0.08);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .scan-import-job-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scan-import-job-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .scan-import-job-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .scan-import-job-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .scan-import-job-size {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .scan-import-job-status {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .scan-import-job-detail {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .scan-import-job-detail.is-empty {
+    display: none;
+  }
+
+  .scan-import-job-progress {
+    position: relative;
+    height: 0.35rem;
+    border-radius: var(--radius-sm);
+    background: rgba(37, 99, 235, 0.1);
+    overflow: hidden;
+  }
+
+  .scan-import-job-progress > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--color-accent);
+    border-radius: inherit;
+    transition: width 0.25s ease;
+  }
+
+  .scan-import-job-progress[data-mode="indeterminate"] > span {
+    width: 45%;
+    animation: scan-import-progress-indeterminate 1.2s ease-in-out infinite;
+  }
+
+  .scan-import-job-progress[data-mode="idle"] > span {
+    width: 0;
+  }
+
+  .scan-import-job-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .scan-import-job-action {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.45rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .scan-import-job-action--primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .scan-import-job-action--primary:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+
+  .scan-import-job-action--ghost {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .scan-import-job-action--ghost:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+}

@@ -1,0 +1,102 @@
+@layer components.scan {
+@container scan (max-width: 48rem) {
+  .preview-viewport {
+    max-height: min(60vh, 600px);
+  }
+}
+
+@container scan (min-width: 48rem) and (max-width: 64rem) {
+  .preview-viewport {
+    max-height: min(65vh, 750px);
+  }
+}
+
+@container scan (max-width: 40rem) {
+  .scan-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container scan (max-width: 52rem) {
+  .format-detection-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .format-detection-switch {
+    justify-self: flex-start;
+  }
+
+  .scan-format-select {
+    max-block-size: clamp(12rem, 50vh, 20rem);
+  }
+}
+
+@container screen (width >= 48rem) {
+  .scan-layout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr);
+  }
+
+  .scan-settings {
+    height: auto;
+  }
+}
+
+@container screen (width >= 72rem) {
+  .scan-layout {
+    grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  }
+}
+
+@container screen (height <= 60rem) {
+  .scan-layout {
+    gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  }
+
+  .video-frame {
+    max-block-size: clamp(240px, 35vh, 360px);
+  }
+
+  .scan-controls {
+    margin-block-start: clamp(0.25rem, 0.75vw, 0.5rem);
+  }
+
+  .scan-format-select {
+    max-block-size: clamp(10rem, 30vh, 14rem);
+  }
+
+  .result-card {
+    padding: clamp(0.85rem, 1.5vw, 1.25rem);
+  }
+}
+
+@container screen (height <= 50rem) {
+  .video-frame {
+    max-block-size: clamp(200px, 30vh, 300px);
+  }
+
+  .scan-controls {
+    gap: clamp(0.5rem, 1vw, 0.85rem);
+    margin-block-start: clamp(0.25rem, 0.5vw, 0.425rem);
+  }
+
+  .scan-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.4rem, 1vw, 0.75rem);
+  }
+
+  .scan-settings {
+    padding: clamp(0.6rem, 1.5vw, 1rem);
+    gap: clamp(0.6rem, 1vw, 0.85rem);
+  }
+
+  .detection-settings-body {
+    gap: clamp(0.6rem, 1vw, 0.85rem);
+  }
+
+  .scan-format-select {
+    max-block-size: clamp(8rem, 25vh, 12rem);
+  }
+}
+}

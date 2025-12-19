@@ -1,0 +1,58 @@
+@layer reset {
+  /**
+   * ScanForge - リセットスタイル
+   *
+   * ブラウザのデフォルトスタイルを最小限に整える。
+   */
+
+  /* ==========================================================================
+   * グローバルリセット
+   * ========================================================================= */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* ==========================================================================
+   * 要素のリセット
+   * ========================================================================= */
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    display: block;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  textarea:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}

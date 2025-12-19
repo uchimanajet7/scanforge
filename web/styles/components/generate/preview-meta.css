@@ -1,0 +1,29 @@
+@layer components.generate {
+/* ============================================================================
+ * プレビューメタ情報
+ * ============================================================================ */
+
+.preview-scale-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  justify-self: end;
+}
+
+.preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+button.is-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+}

@@ -1,0 +1,59 @@
+@layer components.scan {
+/* ============================================================================
+ * レイアウト
+ * ============================================================================ */
+
+.scan-layout {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: 0;
+  align-items: start;
+  align-content: start;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  container: scan / inline-size;
+}
+
+.scan-preview {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  min-inline-size: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.scan-side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-self: stretch;
+  min-block-size: clamp(540px, 70vh, 840px);
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@supports (height: 1svh) {
+  .scan-side {
+    min-block-size: clamp(540px, 70svh, 840px);
+  }
+}
+
+@supports (height: 1lvh) {
+  .scan-side {
+    min-block-size: clamp(540px, 70lvh, 840px);
+  }
+}
+
+@supports (height: 1dvh) {
+  .scan-side {
+    min-block-size: clamp(540px, 70dvh, 840px);
+  }
+}
+}

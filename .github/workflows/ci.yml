@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shellcheck:
+    name: ShellCheck（scripts/**/*.sh）
+    runs-on: ubuntu-latest
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: ShellCheck をインストール
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: ShellCheck 実行（strict）
+        run: bash scripts/tools/lint_shell.sh --strict
+
+  terraform:
+    name: Terraform fmt/validate（infra/terraform）
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: Terraform セットアップ
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+
+      - name: terraform fmt（push時のみ自動適用）
+        if: github.event_name == 'push'
+        run: |
+          bash scripts/tools/fmt_terraform.sh --write
+          if ! git diff --quiet; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "ci: terraform fmt (auto-fix)"
+            git push
+          fi
+
+      - name: terraform fmt -check -recursive（diff付き）
+        run: bash scripts/tools/fmt_terraform.sh --check
+
+      - name: terraform init/validate（backendなし）
+        run: bash scripts/tools/fmt_terraform.sh --validate
+

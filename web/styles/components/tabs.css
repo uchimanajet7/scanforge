@@ -1,0 +1,220 @@
+@layer components.tabs {
+/**
+ * ScanForge - タブコンポーネント
+ *
+ * タブナビゲーションのスタイル
+ */
+
+/* ============================================================================
+ * タブコンテナ
+ * ============================================================================ */
+
+.app-tabs {
+  position: relative;
+  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
+  z-index: 30;
+  background: transparent;
+  padding: 0;
+}
+
+.tab-scroller {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0;
+  min-height: 3rem;
+}
+
+/* ============================================================================
+ * ロゴ表示
+ * ============================================================================ */
+
+.app-logo {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  color: var(--color-text);
+  user-select: none;
+  pointer-events: none;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(0.5rem, 1vw, 1rem) 0 0.5rem;
+  order: 2;
+}
+
+/* ============================================================================
+ * タブリスト
+ * ============================================================================ */
+
+.app-tabs ul {
+  list-style: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  padding: 0 0 0 0.4rem;
+  margin: 0;
+  flex: 0 0 auto;
+  position: relative;
+  align-self: stretch;
+  order: 1;
+  --tab-uniform-width: auto;
+}
+
+.app-tabs ul::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -1rem;
+  right: -1rem;
+  height: 1px;
+  background: var(--color-border);
+  z-index: 1;
+}
+
+.app-tabs li {
+  flex: 0 0 var(--tab-uniform-width, auto);
+  min-width: var(--tab-uniform-width, auto);
+  display: flex;
+}
+
+/* ============================================================================
+ * タブボタン
+ * ============================================================================ */
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: clamp(0.7rem, 1.5svh, 0.9rem) clamp(1rem, 2vw, 1.25rem);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
+  position: relative;
+  margin-bottom: -1px;
+  min-height: 2.5rem;
+  width: 100%;
+  min-inline-size: var(--tab-uniform-width, auto);
+  min-width: var(--tab-uniform-width, auto);
+}
+
+/* 選択されたタブ */
+.tab-btn[aria-selected="true"] {
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  border-bottom: none;
+  z-index: 2;
+  box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.08);
+  padding-bottom: calc(clamp(0.7rem, 1.5svh, 0.9rem) + 3px);
+  font-weight: 700;
+  position: relative;
+}
+
+.tab-btn[aria-selected="true"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+/* ホバー状態 */
+.tab-btn:hover:not([aria-selected="true"]) {
+  background: var(--color-surface);
+  color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* フォーカス状態 */
+.tab-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.tab-btn[aria-selected="true"]:hover,
+.tab-btn[aria-selected="true"]:focus-visible {
+  color: var(--color-text);
+}
+
+/* タブアイコン */
+.tab-btn .tab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  flex: 0 0 auto;
+}
+
+.tab-btn .tab-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================================
+ * アニメーション無効化
+ * ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-btn {
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+}
+
+/* ============================================================================
+ * モバイル対応
+ * ============================================================================ */
+
+@media (width < 40rem) {
+  .tab-btn {
+    padding: clamp(0.6rem, 1.2vw, 0.75rem) clamp(0.8rem, 1.8vw, 1rem);
+    font-size: 0.95rem;
+    min-width: 0;
+  }
+
+  .app-tabs li {
+    flex: 1 1 0;
+    max-width: none;
+  }
+
+  .tab-btn[aria-selected="true"] {
+    padding-bottom: calc(clamp(0.6rem, 1.2vw, 0.75rem) + 2px);
+  }
+
+  .tab-btn .tab-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .app-logo {
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+  }
+
+  .tab-scroller {
+    gap: 0.25rem;
+  }
+
+  .app-tabs {
+    margin: clamp(1rem, 2vw, 1.5rem) 0 0;
+    padding: 0;
+  }
+}
+}

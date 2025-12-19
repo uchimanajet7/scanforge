@@ -1,0 +1,69 @@
+@layer components.scan {
+  .setting-card {
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: 0.9rem;
+    padding: 1rem 1.25rem;
+    min-height: 5.5rem;
+    background: var(--color-surface);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    container-type: inline-size;
+  }
+
+  .setting-card.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .setting-card.is-disabled .setting-card-toggle {
+    cursor: not-allowed;
+  }
+
+  .setting-card:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  }
+
+  .setting-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.75rem;
+  }
+
+  .setting-card-toggle {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .setting-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .setting-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .setting-card-subtitle {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .setting-card-body {
+    display: grid;
+    gap: 0.45rem;
+  }
+}

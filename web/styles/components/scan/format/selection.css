@@ -1,0 +1,113 @@
+@layer components.scan {
+/* ============================================================================
+ * フォーマット選択
+ * ========================================================================== */
+
+.scan-format-group {
+  display: grid;
+  gap: clamp(0.65rem, 1vw, 0.85rem);
+  margin-block-end: calc(-1 * clamp(0.55rem, 1vw, 0.95rem));
+}
+
+.format-detection {
+  padding-block: clamp(0.85rem, 1vw, 1.1rem);
+  padding-inline: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-subtle);
+}
+
+.format-detection-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.format-detection-text {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.scan-format-label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.format-detection-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-self: flex-start;
+}
+
+.format-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.format-switch-text {
+  font-size: 0.95rem;
+}
+
+.recommend-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  color: var(--color-accent-strong, var(--color-accent));
+  background: rgba(37, 99, 235, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.35);
+}
+
+.format-manual-content {
+  display: grid;
+  gap: 0.4rem;
+  min-inline-size: 0;
+  padding-inline: 0;
+  padding-block-end: 0;
+  transition: opacity 0.2s ease;
+}
+
+.format-manual-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.format-manual-content.is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.format-manual-content[aria-disabled='true'] .format-manual-title {
+  color: var(--color-text-muted);
+}
+
+.format-select-wrapper {
+  min-inline-size: 0;
+}
+
+.scan-format-select {
+  width: 100%;
+  height: auto;
+  max-block-size: clamp(12rem, 40vh, 18rem);
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+}
+
+.scan-format-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+}

@@ -1,0 +1,97 @@
+@layer components.scan {
+  .scan-import .uploader {
+    gap: clamp(0.6rem, 1.5vw, 0.9rem);
+  }
+
+  #scanImportSection .uploader-dropzone {
+    min-block-size: clamp(5rem, 18vh, 8rem);
+    padding-block: clamp(0.85rem, 2vw, 1.25rem);
+  }
+
+  .scan-import-droparea {
+    border-style: dashed;
+    background: color-mix(in srgb, var(--color-surface) 92%, white 8%);
+    transition: color 0.2s ease;
+  }
+
+  .scan-import-droparea[data-state='active'] {
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+    color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
+  .scan-import-droparea[data-state='busy'] {
+    border-color: var(--color-border-strong);
+    cursor: progress;
+    opacity: 0.9;
+  }
+
+  .scan-import-droparea[data-state='error'] {
+    border-color: var(--color-danger, #ef4444);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-danger, #ef4444) 24%, transparent);
+  }
+
+  .scan-import-queue {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: clamp(220px, 40vh, 360px);
+    overflow-y: auto;
+    padding-right: 0.2rem;
+  }
+
+  .scan-import-batch-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(37, 99, 235, 0.24);
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    background: rgba(37, 99, 235, 0.12);
+    background: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
+    color: var(--color-text-strong, var(--color-text));
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.05);
+  }
+
+  .scan-import-batch-header.is-alt {
+    background: rgba(14, 165, 233, 0.14);
+    background: color-mix(in srgb, var(--color-info, #0ea5e9) 16%, var(--color-surface));
+  }
+
+  .scan-import-batch-time {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .scan-import-batch-count {
+    font-weight: 500;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .scan-import-queue::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  .scan-import-queue::-webkit-scrollbar-thumb {
+    background: rgba(37, 99, 235, 0.2);
+    border-radius: var(--radius-xs);
+  }
+
+  .scan-import-queue-empty {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+}

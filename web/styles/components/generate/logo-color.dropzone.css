@@ -1,0 +1,80 @@
+@layer components.generate {
+  .logo-tools {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .logo-tools .scan-import-drop-header {
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-drop-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    min-inline-size: 0;
+  }
+
+  .logo-drop-content {
+    display: grid;
+    gap: 0.75rem;
+    flex: 999 1 min(20rem, 100%);
+    min-inline-size: min(20rem, 100%);
+  }
+
+  .logo-preview-slot[data-inline-preview='true'] {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 1 clamp(100px, 14vw, 120px);
+    max-inline-size: clamp(100px, 14vw, 120px);
+    min-inline-size: 100px;
+  }
+
+  .logo-preview-slot[data-inline-preview='true'] .logo-preview-frame {
+    inline-size: 100%;
+  }
+
+  @media (max-width: 48rem) {
+    .logo-drop-body {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    .logo-preview-slot[data-inline-preview='true'] {
+      flex: 1 1 100%;
+      justify-content: flex-start;
+      max-inline-size: none;
+      min-inline-size: 0;
+    }
+  }
+
+  .logo-field[data-uploader-state='active'],
+  .logo-field[data-uploader-state='busy'] {
+    outline: 3px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    outline-offset: 3px;
+    border-radius: var(--radius-md);
+  }
+
+  .logo-field[data-uploader-state='success'] {
+    outline: 3px solid color-mix(in srgb, var(--color-success, #10b981) 30%, transparent);
+    outline-offset: 3px;
+    border-radius: var(--radius-md);
+  }
+
+  .logo-input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    border: 0;
+  }
+}

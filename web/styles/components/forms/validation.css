@@ -1,0 +1,25 @@
+@layer components.forms.validation {
+/* ============================================================================
+ * バリデーション
+ * ============================================================================ */
+
+.field-error {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #ef4444;
+}
+
+textarea[data-invalid='true'],
+input[data-invalid='true'],
+select[data-invalid='true'] {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+textarea[data-invalid='true']:focus-visible,
+input[data-invalid='true']:focus-visible,
+select[data-invalid='true']:focus-visible {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+}

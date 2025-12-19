@@ -1,0 +1,114 @@
+@layer layout {
+  /**
+   * ScanForge - レイアウトスタイル
+   *
+   * アプリケーションのメインレイアウト構造
+   */
+
+  /* ========================================================================
+   * アプリケーションシェル
+   * ====================================================================== */
+
+  .app {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-columns:
+    [full-start] minmax(var(--shell-gap), 1fr)
+    [content-start] minmax(0, min(100%, 100vw - (2 * var(--shell-gap))))
+    [content-end] minmax(var(--shell-gap), 1fr)
+    [full-end];
+  row-gap: var(--shell-row-gap);
+  column-gap: 0;
+  padding-block-start: var(--shell-gap);
+  padding-block-end: var(--shell-gap);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  }
+
+  /* ========================================================================
+   * メインコンテンツエリア
+   * ====================================================================== */
+
+  .app-main {
+  grid-column: content;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+  container-type: inline-size;
+  container-name: main;
+  }
+
+  /* ========================================================================
+   * 画面管理
+   * ====================================================================== */
+
+  .screen {
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+html[data-route='scan'] .screen[data-route='scan'],
+html[data-route='generate'] .screen[data-route='generate'] {
+  display: flex;
+  }
+
+  .screen[hidden] {
+  display: none;
+  }
+
+  .screen-body {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1rem, 3vw, 2.5rem);
+  width: 100%;
+  max-width: 100%;
+  container: screen / inline-size;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+  margin-top: -1px;
+  position: relative;
+  z-index: 1;
+  }
+
+  /* ========================================================================
+   * フッター
+   * ====================================================================== */
+
+  .app-footer {
+  grid-column: content;
+  padding-inline: clamp(1.5rem, 4vw, var(--shell-gap));
+  padding-block: clamp(1rem, 2vw, 1.5rem) 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  }
+
+  .footer-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  white-space: normal;
+  }
+}

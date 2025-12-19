@@ -1,0 +1,125 @@
+@layer utilities.responsive {
+  /**
+   * ScanForge - レスポンシブユーティリティ
+   *
+   * グローバルなレスポンシブ設定
+   */
+
+  /* ========================================================================
+   * モバイル基本設定
+   * ====================================================================== */
+
+  @media (width < 42rem) {
+    .app-bar {
+      padding: clamp(0.5rem, 1.5vw, 0.75rem);
+    }
+
+    .app-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    }
+
+    .app-subtitle {
+      font-size: clamp(0.7rem, 2vw, 0.85rem);
+    }
+
+    .screen-body {
+      padding: clamp(0.75rem, 2vw, 1.5rem);
+    }
+  }
+
+  /* ========================================================================
+   * Container Queries フォールバック
+   * ====================================================================== */
+
+  @supports not (container-type: inline-size) {
+    @media (max-width: 48rem) {
+      .preview-viewport {
+        max-height: min(60vh, 600px);
+      }
+    }
+
+    @media (min-width: 48rem) and (max-width: 64rem) {
+      .preview-viewport {
+        max-height: min(65vh, 750px);
+      }
+    }
+
+    @media (max-width: 40rem) {
+      .scan-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 52rem) {
+      .camera-behavior-grid {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: clamp(0.75rem, 1vw, 1rem);
+      }
+
+      .setting-card {
+        width: 100%;
+      }
+
+      .format-detection-header {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .scan-format-select {
+        max-block-size: clamp(12rem, 50vh, 20rem);
+      }
+
+    }
+
+    @media (max-width: 42rem) {
+      .generate-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .generate-actions .primary,
+      .generate-actions .secondary {
+        max-inline-size: none;
+        flex: 1 1 100%;
+      }
+
+      .history-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .history-actions .icon-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+
+      .size-control-inputs {
+        grid-template-columns: 1fr;
+      }
+
+      .size-number {
+        justify-content: flex-start;
+      }
+
+      .field-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (width >= 48rem) {
+      .scan-layout {
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+        grid-auto-rows: minmax(0, 1fr);
+      }
+
+      .generate-primary-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    @media (width >= 72rem) {
+      .scan-layout {
+        grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@layer utilities.loading {
+  /**
+   * ScanForge - ローディング画面スタイル
+   *
+   * ローディングスピナーとアニメーション
+   */
+
+  /* ========================================================================
+   * ローディング画面
+   * ====================================================================== */
+
+  .app-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: var(--color-surface, #f8fafc);
+  color: var(--color-text, #0f172a);
+  font-size: 1rem;
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .app-loading[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  }
+
+  /* ========================================================================
+   * スピナー
+   * ====================================================================== */
+
+  .app-loading .spinner {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 0.35rem solid rgba(15, 23, 42, 0.12);
+  border-top-color: rgba(59, 130, 246, 0.85);
+  animation: app-spin 1s linear infinite;
+  }
+
+  /* ========================================================================
+   * アニメーション
+   * ====================================================================== */
+
+  @keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+  }
+}

@@ -1,0 +1,68 @@
+@layer components.forms.segmented {
+/* ============================================================================
+ * セグメントトグル
+ * ============================================================================ */
+
+.segmented-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+
+.segment-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.95rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 2.75rem;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.segment-button .segment-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--color-accent);
+}
+
+.segment-button.is-active,
+.segment-button[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+}
+
+.segment-button.is-active .segment-badge,
+.segment-button[aria-pressed='true'] .segment-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.segment-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+}
+
+.segment-button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+}

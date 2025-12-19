@@ -1,0 +1,116 @@
+@layer components.generate {
+/* ============================================================================
+ * プレビューエリア
+ * ============================================================================ */
+
+.preview-viewport {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  min-height: 220px;
+  /* ビューポート高さの70%まで拡大可能、最大900px */
+  max-height: min(70vh, 900px);
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+  /* トランジション追加でスムーズに */
+  transition: max-height 0.3s ease;
+}
+
+.preview-viewport[data-state='empty'] {
+  place-items: center;
+  align-content: center;
+}
+
+.preview-canvas {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-content: start;
+  gap: 0.75rem;
+  inline-size: 100%;
+  align-self: start;
+}
+
+.preview-canvas[data-state='empty'] {
+  min-height: 8rem;
+  place-content: center;
+  place-items: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.preview-canvas [data-preview-kind='render'] {
+  --preview-intrinsic-width: 100%;
+  --preview-intrinsic-height: auto;
+  --preview-aspect: 1 / 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: min(100%, var(--preview-intrinsic-width));
+  aspect-ratio: var(--preview-aspect);
+  contain: layout paint style;
+}
+
+.preview-canvas [data-preview-kind='render'] > * {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+.preview-canvas [data-preview-kind='render'] > img,
+.preview-canvas [data-preview-kind='render'] > canvas {
+  object-fit: contain;
+}
+
+.preview-empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.preview-empty-icon {
+  inline-size: clamp(4rem, 14vw, 5.5rem);
+  block-size: clamp(4rem, 14vw, 5.5rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: rgba(148, 163, 184, 0.18);
+  position: relative;
+  overflow: hidden;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.preview-empty-icon svg {
+  inline-size: 60%;
+  block-size: 60%;
+  fill: currentColor;
+}
+
+.preview-empty-icon svg .preview-empty-badge circle {
+  fill: rgba(59, 130, 246, 0.82);
+}
+
+.preview-empty-icon svg .preview-empty-badge rect {
+  fill: #fff;
+}
+
+.preview-empty-message {
+  margin: 0;
+}
+}

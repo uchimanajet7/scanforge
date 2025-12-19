@@ -1,0 +1,15 @@
+@layer components.scan {
+@keyframes scan-import-progress-indeterminate {
+  0% {
+    transform: translateX(-50%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* ============================================================================
+}

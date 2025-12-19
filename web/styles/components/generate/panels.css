@@ -1,0 +1,51 @@
+@layer components.generate {
+/* ============================================================================
+ * パネル
+ * ============================================================================ */
+
+.generate-input-panel {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.generate-options-panel {
+  align-self: stretch;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.25rem);
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.generate-option-switches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.generate-setting-card {
+  min-height: 100%;
+}
+
+.generate-setting-card .setting-card-title {
+  font-weight: 600;
+}
+
+.generate-setting-card .setting-card-subtitle {
+  font-size: 0.85rem;
+}
+
+.generate-preview {
+  display: grid;
+  min-inline-size: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}

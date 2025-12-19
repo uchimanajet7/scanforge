@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="ScanForge OGP">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A1F44" />
+      <stop offset="1" stop-color="#06142E" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60A5FA" stop-opacity="0.95" />
+      <stop offset="1" stop-color="#22C55E" stop-opacity="0.95" />
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="630" fill="url(#bg)" />
+
+  <g opacity="0.08">
+    <rect x="0" y="88" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="156" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="224" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="292" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="360" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="428" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="496" width="1200" height="2" fill="#FFFFFF" />
+    <rect x="0" y="564" width="1200" height="2" fill="#FFFFFF" />
+  </g>
+
+  <g opacity="0.10" fill="#FFFFFF">
+    <rect x="740" y="92" width="6" height="446" />
+    <rect x="756" y="92" width="2" height="446" />
+    <rect x="764" y="92" width="10" height="446" />
+    <rect x="780" y="92" width="3" height="446" />
+    <rect x="790" y="92" width="8" height="446" />
+    <rect x="804" y="92" width="2" height="446" />
+    <rect x="812" y="92" width="14" height="446" />
+    <rect x="832" y="92" width="4" height="446" />
+    <rect x="844" y="92" width="9" height="446" />
+    <rect x="858" y="92" width="2" height="446" />
+    <rect x="866" y="92" width="12" height="446" />
+    <rect x="884" y="92" width="3" height="446" />
+    <rect x="894" y="92" width="8" height="446" />
+    <rect x="908" y="92" width="2" height="446" />
+    <rect x="916" y="92" width="16" height="446" />
+    <rect x="938" y="92" width="4" height="446" />
+    <rect x="950" y="92" width="10" height="446" />
+    <rect x="966" y="92" width="2" height="446" />
+    <rect x="974" y="92" width="14" height="446" />
+    <rect x="994" y="92" width="3" height="446" />
+    <rect x="1004" y="92" width="9" height="446" />
+    <rect x="1018" y="92" width="2" height="446" />
+    <rect x="1026" y="92" width="12" height="446" />
+    <rect x="1044" y="92" width="4" height="446" />
+    <rect x="1056" y="92" width="8" height="446" />
+    <rect x="1070" y="92" width="2" height="446" />
+    <rect x="1078" y="92" width="16" height="446" />
+    <rect x="1100" y="92" width="4" height="446" />
+  </g>
+
+  <g transform="translate(120, 116)">
+    <rect x="0" y="0" width="84" height="84" rx="18" fill="#0A1F44" />
+    <rect x="0" y="0" width="84" height="84" rx="18" fill="#FFFFFF" opacity="0.06" />
+    <rect x="20" y="24" width="44" height="10" rx="5" fill="#FFFFFF" />
+    <rect x="20" y="39" width="44" height="10" rx="5" fill="#FFFFFF" opacity="0.92" />
+    <rect x="20" y="54" width="44" height="10" rx="5" fill="#FFFFFF" opacity="0.84" />
+  </g>
+
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Noto Sans JP', sans-serif" fill="#FFFFFF">
+    <text x="228" y="175" font-size="72" font-weight="800" letter-spacing="0.5">ScanForge</text>
+    <text x="232" y="228" font-size="28" font-weight="600" opacity="0.92">バーコード読み取り・生成ツール</text>
+    <text x="232" y="270" font-size="20" font-weight="500" opacity="0.78">ブラウザだけで QR / バーコードを扱える OSS</text>
+  </g>
+
+  <rect x="232" y="296" width="440" height="8" rx="4" fill="url(#accent)" />
+
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Noto Sans JP', sans-serif" fill="#FFFFFF" opacity="0.85">
+    <text x="232" y="560" font-size="18" font-weight="600">GitHub Pages / 静的 WebUI</text>
+    <text x="232" y="590" font-size="16" font-weight="500" opacity="0.9">https://uchimanajet7.github.io/scanforge/</text>
+  </g>
+</svg>

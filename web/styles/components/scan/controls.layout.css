@@ -1,0 +1,176 @@
+@layer components.scan {
+  .scan-controls {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1vw, 1rem);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+    margin-block-start: clamp(0.375rem, 1vw, 0.625rem);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .scan-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.75rem;
+    align-items: stretch;
+    align-content: start;
+  }
+
+  .scan-controls > h3 {
+    margin: 0;
+  }
+
+  .scan-settings {
+    margin: 0;
+    display: grid;
+    gap: clamp(0.75rem, 1vw, 1rem);
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  .scan-settings legend {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .scan-settings-description {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .scan-settings-body {
+    display: grid;
+    gap: clamp(0.75rem, 1vw, 1rem);
+  }
+
+  .scan-setting-control {
+    display: grid;
+    gap: 0.35rem;
+    width: 100%;
+  }
+
+  .scan-setting-control label {
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+  }
+
+  .scan-settings select,
+  .scan-settings input[type='number'],
+  .detection-settings select,
+  .detection-settings input[type='number'] {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    box-sizing: border-box;
+  }
+
+  .scan-settings select:focus-visible,
+  .scan-settings input[type='number']:focus-visible,
+  .detection-settings select:focus-visible,
+  .detection-settings input[type='number']:focus-visible {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    outline: none;
+  }
+
+  .scan-settings input[type='number'] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scan-heading-with-icon {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .scan-heading-with-icon .heading-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+
+  .scan-heading-with-icon .heading-icon svg {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    display: block;
+  }
+
+  .camera-behavior-grid {
+    --camera-grid-gap-inline: 1rem;
+    --camera-grid-gap-block: 1.25rem;
+    display: grid;
+    grid-template-columns: minmax(18rem, 1.2fr) minmax(13rem, 1fr) minmax(13rem, 1fr);
+    gap: var(--camera-grid-gap-block) var(--camera-grid-gap-inline);
+    width: 100%;
+    align-items: stretch;
+  }
+
+  @container (max-width: 60rem) {
+    .camera-behavior-grid {
+      grid-template-columns: minmax(18rem, 1fr) minmax(13rem, 1fr);
+    }
+  }
+
+  @container (max-width: 48rem) {
+    .camera-behavior-grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 1rem;
+    }
+
+    .setting-card-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .scan-formats-notice {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--color-text);
+  }
+
+  .scan-formats-notice[data-variant='warning'] {
+    color: #f97316;
+  }
+
+  .result-card.detection-settings {
+    border: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .detection-settings {
+    display: grid;
+    gap: clamp(0.75rem, 1vw, 1.1rem);
+  }
+
+  .detection-settings-body {
+    display: grid;
+    gap: clamp(0.75rem, 1vw, 1rem);
+  }
+
+  .detection-settings-body > label {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+}
