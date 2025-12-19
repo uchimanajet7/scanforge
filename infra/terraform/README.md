@@ -43,6 +43,7 @@ Terraform は Function URL に以下の CORS を設定します（既定）。
 - レイヤー指定（どちらか必須）
   - `layer_zip_path`（例: `build/scanforge-layer.zip`）
   - `existing_layer_arn`（既存レイヤーを使う場合）
+  - 既存レイヤーを使う場合は `existing_layer_arn` を設定し、`layer_zip_path` は空でもよい
 
 ## 出力（outputs）
 - `function_url` … Function URL（`alias_name` に紐付け）

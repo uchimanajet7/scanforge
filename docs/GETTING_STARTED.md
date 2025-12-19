@@ -14,7 +14,7 @@
 
 ## 1) WebUI をすぐ試す
 ### オンライン（GitHub Pages）
-- 公開URL（Pages 有効化後）: `https://uchimanajet7.github.io/scanforge/`
+- 公開URL: `https://uchimanajet7.github.io/scanforge/`
   - 備考: 初回のみ、リポジトリ設定で Pages を有効化する必要があります（手順は下記 1.1 参照）。
 
 ### ローカル（推奨: ローカルサーバー）

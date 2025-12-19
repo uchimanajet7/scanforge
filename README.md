@@ -3,10 +3,10 @@
 バーコード/QR の読み取り・生成を提供する静的 WebUI + Lambda API。
 
 公開サイト（GitHub Pages）
-- `https://uchimanajet7.github.io/scanforge/`（Pages 有効化後）
+- `https://uchimanajet7.github.io/scanforge/`
 
 ## WebUI クイックスタート
-- オンライン: `https://uchimanajet7.github.io/scanforge/`（Pages 有効化後）
+- オンライン: `https://uchimanajet7.github.io/scanforge/`
 - ローカル（推奨: カメラ動作のため）: `bash scripts/tools/web/start-local-web.sh`
   - アクセス: `http://localhost:8000/`（既定。ポートは `SWS_PORT` で変更可能）
 

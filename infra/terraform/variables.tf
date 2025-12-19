@@ -62,17 +62,13 @@ variable "cors_allow_origins" {
 }
 
 variable "layer_zip_path" {
-  description = "依存レイヤー zip のパス（指定必須。既存レイヤーを使う場合は existing_layer_arn を設定）"
+  description = "依存レイヤー zip のローカルパス。existing_layer_arn 未指定時に使用。"
   type        = string
   default     = ""
-  validation {
-    condition     = var.layer_zip_path != "" || var.existing_layer_arn != ""
-    error_message = "layer_zip_path か existing_layer_arn のどちらかを必ず指定してください。"
-  }
 }
 
 variable "existing_layer_arn" {
-  description = "既存レイヤー ARN（指定時は layer_zip_path を無視）"
+  description = "既存の依存レイヤー ARN。指定時は新規作成せずこれを使用。"
   type        = string
   default     = ""
 }

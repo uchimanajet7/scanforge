@@ -54,6 +54,7 @@
 `function_name = "scanforge-api"`
 `alias_name = "prod"`
 `layer_zip_path = "build/scanforge-layer.zip"`
+`existing_layer_arn = ""`
 `enable_snapstart = true`
 `cors_allow_origins = ["*"]`
 
