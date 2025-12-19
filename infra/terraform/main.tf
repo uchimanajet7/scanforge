@@ -1,7 +1,7 @@
 locals {
   function_log_name = "/aws/lambda/${var.function_name}"
   has_layer_zip     = var.layer_zip_path != ""
-  layer_arn         = var.existing_layer_arn != "" ? var.existing_layer_arn : (
+  layer_arn = var.existing_layer_arn != "" ? var.existing_layer_arn : (
     local.has_layer_zip ? aws_lambda_layer_version.deps[0].arn : ""
   )
 }
