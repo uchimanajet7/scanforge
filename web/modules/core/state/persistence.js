@@ -41,9 +41,13 @@ export function restoreState() {
   try {
     const savedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
     if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      updateState('settings', settings);
-      logger.debug('state:restore:settings', settings);
+      const parsed = JSON.parse(savedSettings);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        updateState('settings', parsed);
+        logger.debug('state:restore:settings', parsed);
+      } else {
+        logger.warn('state:restore:settings:invalid', { type: typeof parsed });
+      }
     }
 
     const savedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);

@@ -1,16 +1,16 @@
 import { logger } from '../../core/logger.js';
-import { STORAGE_KEYS, OBSOLETE_KEYS } from '../../core/config/storage-keys.js';
+import { OBSOLETE_KEYS } from '../../core/config/storage-keys.js';
 import { getStorageSize } from './metrics.js';
-import { migrateStorage } from './migrations.js';
 
 export function initStorage() {
-  const migrations = {
-    [OBSOLETE_KEYS.theme]: STORAGE_KEYS.settings,
-  };
-
-  const results = migrateStorage(migrations);
-  if (Object.keys(results).length > 0) {
-    logger.debug('storage:migrate:result', results);
+  const obsoleteThemeKey = OBSOLETE_KEYS.theme;
+  try {
+    if (localStorage.getItem(obsoleteThemeKey) !== null) {
+      localStorage.removeItem(obsoleteThemeKey);
+      logger.debug('storage:cleanup:obsolete-key-removed', { key: obsoleteThemeKey });
+    }
+  } catch (error) {
+    logger.warn('storage:cleanup:obsolete-key-failed', { key: obsoleteThemeKey, error });
   }
 
   const sizeInfo = getStorageSize();
