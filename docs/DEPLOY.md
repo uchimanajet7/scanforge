@@ -47,7 +47,9 @@
 `bash scripts/deploy/build_layer.sh --arch x86_64`
 
 ### 3.2 tfvars（例）
-`infra/terraform/dev.auto.tfvars`（例）
+`infra/terraform/dev.auto.tfvars` は `make_tfvars.sh` が生成するファイルです（Git 管理外 / 新規 clone 直後は存在しません）。形式の確認には `infra/terraform/dev.auto.tfvars.example` を参照してください。
+
+`infra/terraform/dev.auto.tfvars.example`（例）
 
 `aws_region = "ap-northeast-1"`
 `architecture = "x86_64"`

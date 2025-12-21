@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# tfvars を生成する（非対話）。setup で取得した値を受け取り、必要項目のみを `infra/terraform/dev.auto.tfvars` に出力する。
+# tfvars を生成する（非対話）。setup で取得した値を受け取り、必要項目のみを `infra/terraform/dev.auto.tfvars`（生成物 / Git 管理外）に出力する。
+# 形式の確認には `infra/terraform/dev.auto.tfvars.example` を参照する。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

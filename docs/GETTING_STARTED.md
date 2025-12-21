@@ -15,7 +15,7 @@
 ## 1) WebUI をすぐ試す
 ### オンライン（GitHub Pages）
 - 公開URL: `https://uchimanajet7.github.io/scanforge/`
-  - 備考: 初回のみ、リポジトリ設定で Pages を有効化する必要があります（手順は下記 1.1 参照）。
+  - 備考: このURLを閲覧するだけなら設定は不要です。fork 等で自分のリポジトリを GitHub Pages で公開する場合は、下記 1.1 の初回設定が必要です。
 
 ### ローカル（推奨: ローカルサーバー）
 カメラ機能は `file://` では動作しないことがあるため、`localhost` で起動して確認してください。
@@ -27,7 +27,8 @@
 - スキャン: カメラで QR / バーコードを読み取り、結果を履歴へ追加
 - 生成: テキストから QR / バーコードを生成（Code 128/EAN-13/UPC-A/PDF417/Data Matrix など、PNG/SVG）
 
-### 1.1 GitHub Pages（Actions）初回有効化（必須: 一度だけ）
+### 1.1 GitHub Pages（Actions）初回有効化（forkで公開する場合のみ）
+- 対象: このリポジトリを fork した自分のリポジトリ等で、`web/` を GitHub Pages に公開したい場合。
 - 背景: GitHub Actions の Pages ワークフローは、既に Pages が有効なリポジトリ向けです。未有効の状態で「自動有効化」を GITHUB_TOKEN で行うと、権限仕様上 403 となる場合があります。
 - 手順（UI/設定）
   1) GitHub → 対象リポジトリ → Settings → Pages
