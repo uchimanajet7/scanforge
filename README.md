@@ -49,3 +49,6 @@
 
 ## ライセンス
 - MIT License: `LICENSE`
+
+## Notes
+<p><a href="https://uchimanajet7.hatenablog.com/entry/2025/12/21/150000">ScanForge：WebUI でバーコード生成して AWS Lambda でスキャンする</a></p>
