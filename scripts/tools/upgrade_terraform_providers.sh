@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Terraform Provider のアップグレード（レンジ内）。
+# Terraform Provider を指定レンジ内でアップグレードする。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -37,4 +37,3 @@ cd "${SCRIPT_DIR}/../../infra/terraform"
 terraform init -upgrade
 terraform providers lock -platform=linux_amd64 -platform=linux_arm64 -platform=darwin_amd64 -platform=darwin_arm64 || true
 ui::ok tools "providers lock 完了。versions.tf のレンジを見直して plan/apply してください。"
-

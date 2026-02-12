@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 利用ツール・ライブラリのバージョン差分を確認し、更新手順を提示する（ScanForge）
+# ScanForge 向けに利用ツール・ライブラリのバージョン差分を確認し、更新手順を提示する
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -7,10 +7,10 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
 source "${SCRIPT_DIR}/../lib/ui.sh"; ui::init
 
-# 監視対象定義（id|type|target|source|regex|update_action|doc_anchor|latest_url|extra）
+# 監視対象定義: id|type|target|source|regex|update_action|doc_anchor|latest_url|extra
 targets=()
 
-# --- Lambda 依存（lambda/requirements.txt） ---
+# --- Lambda 依存: lambda/requirements.txt ---
 targets+=(
   "pillow|pypi|Pillow|lambda/requirements.txt|Pillow==([0-9.]+)|lambda/requirements.txt を更新後に bash scripts/deploy/build_layer.sh --arch x86_64|docs/VERSIONS.md#pillow|https://pypi.org/project/Pillow/|"
 )
@@ -30,7 +30,7 @@ targets+=(
   "requests|pypi|requests|lambda/requirements.txt|requests==([0-9.]+)|lambda/requirements.txt を更新後に bash scripts/deploy/build_layer.sh --arch x86_64|docs/VERSIONS.md#requests|https://pypi.org/project/requests/|"
 )
 
-# --- Web（CDN）依存（web/index.html） ---
+# --- Web 依存: コンテンツデリバリネットワーク / web/index.html ---
 targets+=(
   "zxing_js|npm|@zxing/library|web/index.html|@zxing/library@([0-9.]+)|web/index.html の CDN バージョンを {latest} に更新|docs/VERSIONS.md#zxing-js|https://www.jsdelivr.com/package/npm/@zxing/library|"
 )
@@ -52,7 +52,7 @@ targets+=(
   "aws_lambda_runtime|manual|aws_lambda_runtime|infra/terraform/main.tf|runtime[[:space:]]*=[[:space:]]*\"(python[0-9.]+)\"|docs/VERSIONS.md#aws-lambda-python-runtime を参照|docs/VERSIONS.md#aws-lambda-python-runtime|https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html|python3.13"
 )
 
-# --- 開発環境ツール（ローカルコマンドの現行値 + 外部一次情報の最新値） ---
+# --- 開発環境ツール: ローカルコマンドの現行値と外部一次情報の最新値 ---
 targets+=(
   "aws_cli|html_regex|https://awscli.amazonaws.com/v2/documentation/api/latest/index.html|CMD:aws --version|aws-cli/([0-9.]+)|docs/VERSIONS.md#開発環境ツール を参照|docs/VERSIONS.md#開発環境ツール|https://awscli.amazonaws.com/v2/documentation/api/latest/index.html|AWS CLI [0-9]+\\.[0-9]+\\.[0-9]+"
 )
@@ -77,7 +77,7 @@ want_json="false"
 usage() {
   cat <<'USAGE'
 使い方: bash scripts/tools/check_updates.sh [--json]
-  --json  JSON形式で結果を出力します（標準出力に配列を1行で出力）。
+  --json  JSON形式で結果を出力します。標準出力に配列を1行で出力します。
 USAGE
 }
 
@@ -173,7 +173,7 @@ fetch_latest_version() {
       return 0
       ;;
     npm)
-      # スコープ付き（@scope/name）は URL エンコードが必要
+      # スコープ付きの@scope/nameは URL エンコードが必要
       local encoded="$target"
       encoded="${encoded//@/%40}"
       encoded="${encoded//\//%2F}"
@@ -223,7 +223,7 @@ fetch_latest_version() {
           return 0
         fi
       fi
-      FETCH_NOTE="パターンが見つかりませんでした（${extra}）"
+      FETCH_NOTE="パターンが見つかりませんでした。${extra}"
       return 1
       ;;
 	    aws_cli_manifest)
@@ -369,7 +369,7 @@ describe_fetch() {
   if [[ -z "$endpoint" ]]; then
     echo "(unknown)"
   elif [[ "$endpoint" == "(manual)" ]]; then
-    echo "scripts/tools/check_updates.sh（manual）"
+    echo "scripts/tools/check_updates.sh manual"
   else
     echo "$endpoint"
   fi
@@ -416,7 +416,7 @@ for entry in "${targets[@]}"; do
     fi
   fi
 
-  # 最新版取得（missingでも試す）
+  # 最新版取得。missingでも試す
   latest_fetch_err=""
   if fetch_latest_version "$type" "$target" "$extra"; then
     latest_version="$LATEST_VERSION"
@@ -442,7 +442,7 @@ for entry in "${targets[@]}"; do
       if [[ -n "$HTTP_ERROR_TEXT" ]]; then
         failure_note="$HTTP_ERROR_TEXT"
       elif [[ -n "$HTTP_STATUS" ]]; then
-        failure_note="取得に失敗しました（HTTP ${HTTP_STATUS}）"
+        failure_note="取得に失敗しました。HTTP ${HTTP_STATUS} です"
       else
         failure_note="取得に失敗しました"
       fi

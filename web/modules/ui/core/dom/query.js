@@ -13,7 +13,7 @@ import { logger } from '../../../core/logger.js';
 const elementCache = new Map();
 
 /**
- * 要素を取得（キャッシュ付き）
+ * 要素を取得し、キャッシュを使う。
  * @param {string} selector - セレクタ
  * @param {Element|Document} parent - 親要素
  * @param {boolean} multiple - 複数要素取得フラグ

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Function URL 経由で /encode /decode をスモークする（readiness 待ち・タイムアウト設定を含む）
+# Function URL 経由で /encode /decode をスモークします。readiness 待ちとタイムアウト設定を含みます。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -20,22 +20,19 @@ __af_end() {
 }
 trap __af_end EXIT
 
-# デフォルト値（環境変数で上書き可）
-IMAGE_URL="https://placehold.co/256x256.png"
+# デフォルト値。環境変数で上書きできます。
 SMOKE_TIMEOUT_FUNC="${SMOKE_TIMEOUT_FUNC:-25}"  # POST /encode の最大秒
-SMOKE_TIMEOUT_HEAD="${SMOKE_TIMEOUT_HEAD:-10}"  # HEAD確認の最大秒（未使用だが形式維持）
 SMOKE_READY_WAIT_SECONDS="${SMOKE_READY_WAIT_SECONDS:-90}" # Function URL readiness 待ち
 EXPECTED_TEXT="SCANFORGE"
 
 usage() {
   cat <<USAGE
-使い方: bash scripts/deploy/smoke.sh [--image-url URL]
+使い方: bash scripts/deploy/smoke.sh
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --image-url) IMAGE_URL="$2"; shift 2;;
     -h|--help) usage; exit 0;;
     *) ui::err smoke "不明な引数: $1"; usage; exit 1;;
   esac
@@ -47,16 +44,16 @@ URL=$(terraform output -raw function_url 2>/dev/null)
 RC=$?
 set -e
 if [[ $RC -ne 0 || -z "${URL:-}" || ! "$URL" =~ ^https?:// ]]; then
-  ui::err smoke "Function URL を取得できません（terraform outputs 未定義/空）。"
-  ui::info smoke "取得手順: cd infra/terraform && terraform init && terraform plan -out=tfplan && terraform apply tfplan"
+  ui::err smoke "Function URL を取得できません。terraform outputs に function_url がありません。"
+  ui::info smoke "デプロイ手順: bash scripts/deploy/with_aws.sh -- bash scripts/deploy/deploy.sh"
   exit 2
 fi
 ui::info smoke "Function URL: ${URL}"
 BASE_URL="${URL%/}"
 
-# Readiness プローブ: GET /encode でHTTP応答が得られるまで待機（status 200/400/404/415/422 を ready とみなす）
+# Readiness プローブ: GET /encode でHTTP応答が得られるまで待機します。status 200/400/404/415/422 を ready とみなします。
 if [[ ${SMOKE_READY_WAIT_SECONDS} -gt 0 ]]; then
-  ui::info smoke "0) readiness: GET /encode の到達性を確認（最長 ${SMOKE_READY_WAIT_SECONDS}s）"
+  ui::info smoke "0) readiness: GET /encode の到達性を確認。最長 ${SMOKE_READY_WAIT_SECONDS}s"
   ui::run smoke "GET:"
   printf "  %s\n" "curl -sS -o /dev/null -w \"%{http_code}\" --connect-timeout 3 --max-time 4 \"${BASE_URL}/encode\"" >&2
   printf "  %s\n" "${BASE_URL}/encode" >&2
@@ -67,19 +64,19 @@ if [[ ${SMOKE_READY_WAIT_SECONDS} -gt 0 ]]; then
     set -e
     case "$RC_CODE" in
       200|400|404|415|422)
-        ui::ok smoke "ready (status=${RC_CODE}, ${i}s)"
+        ui::ok smoke "準備完了。状態コードは ${RC_CODE}、経過は ${i} 秒です。"
         READY_OK=1
         break
         ;;
     esac
     if (( i % 15 == 0 )); then
       REM=$(( SMOKE_READY_WAIT_SECONDS - i ))
-      ui::info smoke "readiness待機中: 経過 ${i}s / ${SMOKE_READY_WAIT_SECONDS}s (残り ${REM}s, 最後の応答: ${RC_CODE:--})"
+      ui::info smoke "readiness待機中: 経過 ${i}s / ${SMOKE_READY_WAIT_SECONDS}s。残り ${REM}s。最後の応答: ${RC_CODE:--}"
     fi
     sleep 1
   done
   if [[ $READY_OK -eq 0 ]]; then
-    ui::warn smoke "readiness確認がタイムアウトしました（続行します）"
+    ui::warn smoke "readiness確認がタイムアウトしました。続行します。"
   fi
 fi
 
@@ -113,7 +110,7 @@ if [[ -z "${SVG_CONTENT}" || "${SVG_CONTENT}" == "null" ]]; then
   exit 1
 fi
 if ! printf '%s' "${SVG_CONTENT}" | grep -q "<svg"; then
-  ui::err smoke "SVG content が不正です（<svg が見つかりません）"
+  ui::err smoke "SVG content が不正です。<svg が見つかりません。"
   exit 1
 fi
 DATA_URI=$(printf 'data:image/svg+xml;base64,%s' "$(printf '%s' "${SVG_CONTENT}" | base64 | tr -d '\n')")
@@ -142,7 +139,7 @@ fi
 # decode結果に期待テキストが含まれることを確認
 FOUND=$(printf '%s' "${BODY_DEC}" | jq -r --arg t "${EXPECTED_TEXT}" 'any(.results[]?; .text == $t)')
 if [[ "${FOUND}" != "true" ]]; then
-  ui::err smoke "decode 結果に期待値が含まれませんでした（期待: ${EXPECTED_TEXT}）"
+  ui::err smoke "decode 結果に期待値が含まれませんでした。期待: ${EXPECTED_TEXT}。"
   exit 1
 fi
 

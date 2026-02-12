@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# ローカルで Lambda ハンドラー（lambda/handler.py）を HTTP API として起動する。
+# ローカルで lambda/handler.py の Lambda ハンドラーを HTTP API として起動する。
 # 目的: /encode /decode をローカルで手早くテスト確認できるようにする。
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ def load_lambda_handler(repo_root: Path) -> Callable[[Dict[str, Any], Any], Dict
 
     spec = importlib.util.spec_from_file_location("scanforge_lambda_handler", handler_path)
     if spec is None or spec.loader is None:
-        raise RuntimeError("lambda ハンドラーのロードに失敗しました（importlib spec）")
+        raise RuntimeError("lambda ハンドラーのロードに失敗しました。importlib spec の生成に失敗しました。")
 
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)  # type: ignore[call-arg]
@@ -112,8 +112,8 @@ class ApiHandler(BaseHTTPRequestHandler):
 
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="ScanForge の Lambda API をローカルで起動します。")
-    parser.add_argument("--host", default="127.0.0.1", help="バインドするホスト（デフォルト: 127.0.0.1）")
-    parser.add_argument("--port", type=int, default=8001, help="待受ポート（デフォルト: 8001）")
+    parser.add_argument("--host", default="127.0.0.1", help="バインドするホスト。既定値は 127.0.0.1")
+    parser.add_argument("--port", type=int, default=8001, help="待受ポート。既定値は 8001")
     args = parser.parse_args(argv)
 
     repo_root = Path(__file__).resolve().parents[3]

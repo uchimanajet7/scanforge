@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# 日本語コメント必須ルールに従い、処理内容を記載する。
-# このスクリプトは Static Web Server (SWS) を自動取得し、ScanForge WebUI をローカルで提供する。
+# このスクリプトは Static Web Server を自動取得し、ScanForge のウェブユーザーインターフェースをローカルで提供する。
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
@@ -233,7 +232,7 @@ terminate_conflicts() { # $@=PID 群
       continue
     fi
     if kill -0 "$pid" 2>/dev/null; then
-      ui::warn "${LOG_TAG}" "PID ${pid} に SIGTERM を送信できませんでした（権限不足の可能性）。"
+      ui::warn "${LOG_TAG}" "プロセス識別子 ${pid} に終了要求シグナル SIGTERM を送信できませんでした。権限不足の可能性があります。"
       remaining+=("$pid")
     fi
   done
@@ -515,10 +514,10 @@ CLIENT_URL="http://localhost:${SWS_PORT}/"
 if [[ -n "${CLIENT_LOG_LEVEL}" ]]; then
   CLIENT_URL="${CLIENT_URL}?logLevel=${CLIENT_LOG_LEVEL}"
 fi
-log_info "  ${CLIENT_URL}"
-if [[ -n "${CLIENT_LOG_LEVEL}" ]]; then
-  log_info "  （永続化しない一時切替: window.ScanForgeLogger?.setLevel('${CLIENT_LOG_LEVEL}', { persist: false });）"
-fi
+	log_info "  ${CLIENT_URL}"
+	if [[ -n "${CLIENT_LOG_LEVEL}" ]]; then
+	  log_info "  永続化しない一時切替: window.ScanForgeLogger?.setLevel('${CLIENT_LOG_LEVEL}', { persist: false });"
+	fi
 
 "${SWS_BIN}" \
   --root "${SWS_ROOT}" \

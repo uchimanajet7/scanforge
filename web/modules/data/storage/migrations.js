@@ -13,7 +13,7 @@ export function migrateStorage(migrations) {
             try {
               return JSON.parse(value);
             } catch {
-              // JSON でなければ文字列のまま移す（ローカルストレージには JSON 以外も入り得る）。
+              // JavaScript Object Notation 形式でなければ文字列のまま移す。ローカルストレージには JavaScript Object Notation 形式以外も入り得る。
               return value;
             }
           })();

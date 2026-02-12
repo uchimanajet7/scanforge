@@ -2,8 +2,8 @@
  * ScanForge - 検出ジオメトリ共通ヘルパー
  *
  * バウンディングボックスやポイント座標の正規化処理を提供する。
- * スキャナー周辺の各モジュール（検出データのキャッシュキー生成や
- * オーバーレイ描画など）で共通利用する。
+ * スキャナー周辺の各モジュールで、検出データのキャッシュキー生成や
+ * オーバーレイ描画などに共通で利用する。
  */
 
 export const DETECTION_CACHE_CELL_SIZE = 48;
@@ -127,4 +127,3 @@ function toFiniteNumber(value) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : null;
 }
-

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# terraform init を実行（冪等）
+# terraform init を実行する。冪等。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -22,11 +22,11 @@ trap __af_end EXIT
 
 BACKEND_CONFIG="${BACKEND_CONFIG:-}"
 
-# usage対応（-h|--help）
+# usage 対応。-h|--help を処理する
 usage() {
   cat <<USAGE
 使い方: bash scripts/deploy/tf_init.sh [--backend-config path]
-  - Terraform init を実行します（冪等）。
+  - Terraform init を実行します。冪等です。
 USAGE
 }
 

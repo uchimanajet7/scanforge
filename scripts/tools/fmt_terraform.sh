@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Terraform fmt/validate ラッパー（ローカル/CI共通）
+# Terraform fmt と validate のラッパー。ローカルと継続的インテグレーションで共通利用する。
 # 用途:
 #   - 整形適用: bash scripts/tools/fmt_terraform.sh --write
 #   - 整形確認: bash scripts/tools/fmt_terraform.sh --check
@@ -75,4 +75,3 @@ fi
 if [[ "$DO_WRITE$DO_CHECK$DO_VALIDATE" == "falsefalsefalse" ]]; then
   info "実行内容が指定されていません。--help を参照してください。"
 fi
-

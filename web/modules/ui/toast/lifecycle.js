@@ -1,5 +1,5 @@
 /**
- * トーストのライフサイクル（state購読とキーボードハンドラ）を管理する。
+ * トーストのライフサイクルとして、state 購読とキーボードハンドラを管理する。
  */
 
 import { observeToasts } from './state-sync.js';

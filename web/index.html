@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="only light">
   <title>ScanForge - バーコード読み取り・生成ツール</title>
-  <!-- メタ: OGP/Twitter（名称整合） -->
   <meta name="description" content="ScanForge はブラウザだけでバーコード/QR を読み取り・生成できる OSS ツールです。">
   <meta name="application-name" content="ScanForge">
   <meta property="og:type" content="website">
@@ -19,8 +18,6 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:image" content="ogp.png">
-  <!-- 参考: 既定は PNG の OGP 画像を使用。SVG 版も同梱しているため必要なら差し替え可能。
-       <meta property="og:image" content="ogp.svg" /> -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ScanForge - バーコード読み取り・生成ツール">
   <meta name="twitter:description" content="ScanForge はブラウザだけでバーコード/QR を読み取り・生成できる OSS ツールです。">
@@ -33,7 +30,7 @@
        * クリティカルCSS - 最小限の必須スタイル
        *
        * これらのスタイルは外部CSSが読み込まれる前に適用される必要があります：
-       * - FOUC（Flash of Unstyled Content）防止
+      * - FOUC を防止する。Flash of Unstyled Content の略。
        * - ローディング画面の表示
        */
 
@@ -50,7 +47,7 @@
       opacity: 1;
     }
 
-    /* ローディング画面（外部CSS読み込み前に必要） */
+    /* ローディング画面。外部CSS読み込み前に必要。 */
     .app-loading {
       position: fixed;
       inset: 0;
@@ -90,9 +87,9 @@
      *
      * このスクリプトは最初に実行され、以下を行います：
      * 1. URLハッシュから初期ルートを判定
-     * 2. data-route属性を設定（画面表示制御用）
-     * 3. is-loadingクラスを追加（FOUC防止）
-     * 4. グローバル変数に初期ルートを保存（モジュールから参照可能）
+     * 2. data-route属性を設定。画面表示制御用。
+     * 3. is-loadingクラスを追加。FOUC防止。
+     * 4. グローバル変数に初期ルートを保存。モジュールから参照可能。
      */
     (function () {
       var hash = window.location.hash || '';
@@ -449,7 +446,7 @@
                     <span>検出モード</span>
                   </label>
                   <select id="scanModeSelect">
-                    <option value="auto">自動 (推奨)</option>
+                    <option value="auto">自動 推奨</option>
                     <option value="barcode-detector">BarcodeDetector</option>
                     <option value="zxing">ZXing フォールバック</option>
                   </select>
@@ -469,7 +466,7 @@
                       <div class="format-detection-switch">
                         <label class="format-switch" for="scanFormatsAutoToggle" id="formatSwitchLabel">
                           <span class="format-switch-text">自動判別</span>
-                          <span class="sr-only">(推奨)</span>
+                          <span class="sr-only">推奨</span>
                           <div class="quick-switch-control">
                             <input type="checkbox" class="quick-switch-input" id="scanFormatsAutoToggle" role="switch"
                               aria-checked="true" checked />
@@ -913,7 +910,6 @@
 
   <script src="https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js" defer></script>
   <script src="https://unpkg.com/bwip-js@4.8.0/dist/bwip-js-min.js" defer></script>
-  <!-- モジュール化された新しいエントリーポイント -->
   <script type="module" src="app.js?v=20251218-144957" data-cache-bust="script" defer></script>
 </body>
 

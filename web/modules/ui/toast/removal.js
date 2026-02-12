@@ -40,7 +40,7 @@ export function remove(context, id, { reason = 'manual' } = {}) {
     try {
       cleanup?.();
     } catch {
-      // cleanup は任意の後処理（ベストエフォート）。例外で削除フローが中断しないよう無視する。
+      // cleanup は任意の後処理であり、ベストエフォートとして例外で削除フローが中断しないよう無視する。
     }
     removeContainerIfEmpty(container, logger);
   }, TOAST_REMOVAL_DELAY_MS);

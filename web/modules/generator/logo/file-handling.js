@@ -116,7 +116,7 @@ export async function ingestLogo(file, source) {
     renderLogoPreview(asset);
 
     if (warning) {
-      toast.warning('抽出した色が暗すぎるため既定色（#000000）を用います。');
+      toast.warning('抽出した色が暗すぎるため既定色は #000000 を用います。');
       setLogoPriority(false);
       setLogoPriorityToggle(false);
       applyLogoPrioritySideEffects();

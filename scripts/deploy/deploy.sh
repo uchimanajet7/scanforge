@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# デプロイ一括実行（setup → layer → tfvars → init → plan → apply → smoke）
+# デプロイ一括実行。setup → layer → tfvars → init → plan → apply → smoke の順に実行します。
 # 認証は with_aws.sh で付与する前提。setup→build_layer→make_tfvars→tf_init→tf_plan→tf_apply→smoke を順に実行する。
 set -euo pipefail
 
@@ -13,19 +13,17 @@ info() { ui::info deploy "$*"; }
 hdr()  { ui::hdr deploy "$*"; }
 err()  { ui::err deploy "$*"; }
 
-IMAGE_URL=""
 REGION_INPUT=""
 
 usage() {
   cat <<USAGE
-使い方: bash scripts/deploy/deploy.sh [--image-url URL]
-  --image-url : スモークテストで /decode に渡す画像URL（任意）
+使い方: bash scripts/deploy/deploy.sh [--region REGION]
+  --region : AWSリージョン。任意です。指定時は setup のリージョン入力を省略します。
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --image-url) IMAGE_URL="$2"; shift 2;;
     --region) REGION_INPUT="$2"; shift 2;;
     -h|--help) usage; exit 0;;
     *) err "不明な引数: $1"; usage; exit 1;;
@@ -38,7 +36,7 @@ info "----- start: ${START_TS} -----"
 
 # 認証チェック
 if [[ -z "${AWS_PROFILE-}" && ( -z "${AWS_ACCESS_KEY_ID-}" || -z "${AWS_SESSION_TOKEN-}" ) ]]; then
-  hdr "前提エラー: 認証が未注入（with_aws.sh 経由で実行してください）"
+  hdr "前提エラー: 認証が未注入です。with_aws.sh 経由で実行してください。"
   ui::err deploy "例: bash scripts/deploy/with_aws.sh --mode profile --profile <WORK_PROFILE> -- bash scripts/deploy/deploy.sh"
   exit 1
 fi
@@ -87,7 +85,7 @@ ui::run deploy "tf_plan.sh:"
 printf "  %s\n" "bash ${SCRIPT_DIR}/tf_plan.sh" >&2
 bash "${SCRIPT_DIR}/tf_plan.sh"
 
-# 6) terraform apply（確認付き、apply_yes で無人化）
+# 6) terraform apply。確認付きです。apply_yes で無人化します。
 hdr "Terraform apply"
 TA_ARGS=()
 AUTO_APPLY="false"
@@ -96,10 +94,10 @@ if [[ "${APPLY_YES}" == "true" ]]; then
 fi
 
 if [[ "${AUTO_APPLY}" != "true" ]]; then
-  ui::info deploy "plan の内容を apply する前に確認します（既定: N）"
+  ui::info deploy "plan の内容を apply する前に確認します。既定: N。"
   ui::ask_yesno __GO deploy "plan の内容を apply しますか？" N
   if [[ "${__GO}" != "true" ]]; then
-    ui::info deploy "apply をスキップしました（正常終了）。再適用は以下を参照してください。"
+    ui::info deploy "apply をスキップしました。正常終了です。再適用は以下を参照してください。"
     ui::run  deploy "tf_apply.sh:"
     printf "  %s\n" "bash ${SCRIPT_DIR}/tf_apply.sh --yes" >&2
     END_MS=$(ui::epoch_ms); DIFF_MS=$((END_MS-START_MS))
@@ -122,17 +120,9 @@ bash "${SCRIPT_DIR}/tf_apply.sh" "${TA_ARGS[@]}"
 
 # 7) スモーク
 hdr "スモーク(smoke)"
-SM_ARGS=()
-[[ -n "$IMAGE_URL" ]] && SM_ARGS+=(--image-url "$IMAGE_URL")
-RUN_SM_ARGS="${SM_ARGS[*]-}"
 ui::run deploy "smoke.sh:"
-if (( ${#SM_ARGS[@]} )); then
-  printf "  %s\n" "bash ${SCRIPT_DIR}/smoke.sh ${RUN_SM_ARGS}" >&2
-  bash "${SCRIPT_DIR}/smoke.sh" "${SM_ARGS[@]}"
-else
-  printf "  %s\n" "bash ${SCRIPT_DIR}/smoke.sh" >&2
-  bash "${SCRIPT_DIR}/smoke.sh"
-fi
+printf "  %s\n" "bash ${SCRIPT_DIR}/smoke.sh" >&2
+bash "${SCRIPT_DIR}/smoke.sh"
 
 END_MS=$(ui::epoch_ms)
 DIFF_MS=$((END_MS-START_MS))

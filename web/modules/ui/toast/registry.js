@@ -43,7 +43,7 @@ export function resetRegistry() {
     try {
       cleanup();
     } catch {
-      // cleanup は任意の後処理（ベストエフォート）。一部の失敗で全体のリセットが中断しないよう無視する。
+      // cleanup は任意の後処理であり、ベストエフォートとして一部の失敗で全体のリセットが中断しないよう無視する。
     }
   });
   elementCleanups.clear();

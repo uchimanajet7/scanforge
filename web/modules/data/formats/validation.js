@@ -58,7 +58,7 @@ export function validateText(text, format) {
     if (pattern && !pattern.test(text)) {
       return {
         valid: false,
-        error: `使用できない文字が含まれています（${def.charset}のみ）`,
+        error: `使用できない文字が含まれています。許可される文字は ${def.charset} のみです。`,
       };
     }
   }

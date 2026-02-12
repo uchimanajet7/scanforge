@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   shellcheck:
-    name: ShellCheck（scripts/**/*.sh）
+    name: ShellCheck 対象 scripts/**/*.sh
     runs-on: ubuntu-latest
     steps:
       - name: チェックアウト
@@ -23,11 +23,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y shellcheck
 
-      - name: ShellCheck 実行（strict）
+      - name: ShellCheck 実行 厳格
         run: bash scripts/tools/lint_shell.sh --strict
 
   terraform:
-    name: Terraform fmt/validate（infra/terraform）
+    name: Terraform 整形と検証 対象 infra/terraform
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -40,7 +40,7 @@ jobs:
         with:
           terraform_version: 1.5.7
 
-      - name: terraform fmt（push時のみ自動適用）
+      - name: terraform 書式整形 push時のみ自動適用
         if: github.event_name == 'push'
         run: |
           bash scripts/tools/fmt_terraform.sh --write
@@ -52,9 +52,8 @@ jobs:
             git push
           fi
 
-      - name: terraform fmt -check -recursive（diff付き）
+      - name: terraform fmt -check -recursive 差分付き
         run: bash scripts/tools/fmt_terraform.sh --check
 
-      - name: terraform init/validate（backendなし）
+      - name: terraform 初期化と検証 バックエンド なし
         run: bash scripts/tools/fmt_terraform.sh --validate
-

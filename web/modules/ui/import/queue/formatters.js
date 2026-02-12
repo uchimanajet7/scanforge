@@ -34,7 +34,7 @@ export function formatRetryLabel(job) {
     const remaining = job.retryAt - Date.now();
     if (remaining > 0) {
       const seconds = Math.ceil(remaining / 1000);
-      return `再試行準備中（約 ${seconds} 秒後）`;
+      return `再試行準備中。再試行まで約 ${seconds} 秒です。`;
     }
   }
   return '再試行を準備しています…';
@@ -68,7 +68,7 @@ export function formatJobDetail(job, formats, truncateFn) {
     const formatName = formats.getDisplayName(first.format);
     const snippet = truncateFn(first.text || '', 48);
     return count > 1
-      ? `${count} 件検出（先頭: ${formatName} / ${snippet}）`
+      ? `${count} 件検出。先頭は ${formatName} / ${snippet}。`
       : `${formatName} を検出しました: ${snippet}`;
   }
 
@@ -85,7 +85,7 @@ export function formatJobDetail(job, formats, truncateFn) {
   }
 
   if (job.status === 'queued' && job.attempts > 0) {
-    return `再試行待機中（試行 ${job.attempts} 回目）`;
+    return `再試行待機中。試行は ${job.attempts} 回目です。`;
   }
 
   return '';

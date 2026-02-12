@@ -1,5 +1,5 @@
 output "function_url" {
-  description = "Lambda Function URL（エイリアスに紐付け）"
+  description = "Lambda Function URL。エイリアスに紐付けます。"
   value       = aws_lambda_function_url.url.function_url
 }
 
@@ -14,6 +14,6 @@ output "alias_arn" {
 }
 
 output "layer_arn" {
-  description = "使用中の依存レイヤー ARN（存在しない場合は空文字）"
+  description = "使用中の依存レイヤー ARN。未設定時は空文字。"
   value       = local.layer_arn
 }

@@ -37,7 +37,7 @@ if [[ ! -f "${HTML_FILE}" ]]; then
   exit 1
 fi
 
-# バックアップ作成（.originalがない場合のみ）
+# バックアップ作成。.original がない場合のみ作成する
 if [[ ! -f "${HTML_FILE}.original" ]]; then
   cp "${HTML_FILE}" "${HTML_FILE}.original"
   log_info "バックアップ作成: ${HTML_FILE}.original"

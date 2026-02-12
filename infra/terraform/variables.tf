@@ -10,13 +10,13 @@ variable "function_name" {
 }
 
 variable "alias_name" {
-  description = "Function URL に紐付けるエイリアス名（SnapStart は公開版で有効）"
+  description = "Function URL に紐付けるエイリアス名。SnapStart は公開版で有効です。"
   type        = string
   default     = "prod"
 }
 
 variable "architecture" {
-  description = "Lambda アーキテクチャ（arm64|x86_64。既定 x86_64）"
+  description = "Lambda アーキテクチャ。arm64 または x86_64。既定は x86_64。"
   type        = string
   default     = "x86_64"
   validation {
@@ -26,19 +26,19 @@ variable "architecture" {
 }
 
 variable "lambda_timeout_seconds" {
-  description = "Lambda タイムアウト（秒）"
+  description = "Lambda タイムアウト。単位は秒。"
   type        = number
-  default     = 10
+  default     = 15
 }
 
 variable "lambda_memory_mb" {
-  description = "Lambda メモリ（MB）"
+  description = "Lambda メモリ。単位はメガバイト。"
   type        = number
   default     = 512
 }
 
 variable "lambda_tmp_mb" {
-  description = "/tmp サイズ（MB, SnapStart は 512MB 超と非互換）"
+  description = "/tmp サイズ。単位は MB。SnapStart は 512MB 超と非互換です。"
   type        = number
   default     = 512
 }
@@ -50,7 +50,7 @@ variable "log_retention_days" {
 }
 
 variable "enable_snapstart" {
-  description = "SnapStart を有効化するか（PublishedVersions）"
+  description = "SnapStart を有効化するか。PublishedVersions で適用します。"
   type        = bool
   default     = true
 }

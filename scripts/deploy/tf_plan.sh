@@ -19,7 +19,7 @@ __af_end() {
 }
 trap __af_end EXIT
 
-# usage対応（-h|--help）
+# usage対応: -h|--help
 usage() {
   cat <<USAGE
 使い方: bash scripts/deploy/tf_plan.sh
@@ -49,9 +49,9 @@ STATUS=$?
 set -e
 case "$STATUS" in
   0)
-    ui::ok tf "plan 完了: 差分なし（tfplan 作成）";;
+    ui::ok tf "plan 完了: 差分なし。tfplan を作成しました。";;
   2)
-    ui::ok tf "plan 完了: 差分あり（tfplan 作成）";;
+    ui::ok tf "plan 完了: 差分あり。tfplan を作成しました。";;
   *)
     ui::err tf "plan に失敗しました (exit=${STATUS})"; exit "$STATUS";;
 esac

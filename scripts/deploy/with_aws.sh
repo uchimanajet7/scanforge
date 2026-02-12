@@ -22,9 +22,9 @@ __af_end() {
 }
 trap __af_end EXIT
 
-MODE="profile"       # profile | auth（既定: profile）
+MODE="profile"       # profile | auth。既定は profile
 PROFILE=""           # mode=profile 用
-BASE_PROFILE=""      # mode=auth 用（任意）
+BASE_PROFILE=""      # mode=auth 用。設定は任意です。
 ROLE_ARN=""          # mode=auth 用
 MFA_ARN=""           # mode=auth 用
 DURATION="3600"       # mode=auth 用
@@ -34,22 +34,22 @@ usage() {
 使い方: scripts/deploy/with_aws.sh [--mode profile|auth] [オプション] -- <command...>
 
 モード:
-  --mode auth        AssumeRole + MFA で一時クレデンシャルを取得（内蔵）
+  --mode auth        AssumeRole + MFA で一時クレデンシャルを取得。内蔵です。
     --base-profile NAME
     --role-arn ARN
     --mfa-arn  ARN
     --duration SECONDS
 
-  --mode profile     AWS CLI v2 の credential source を用いる（既定）
-    --profile NAME   export-credentials の対象プロファイル（未指定時は対話選択）
+  --mode profile     AWS CLI v2 の credential source を用いる。既定のモードです。
+    --profile NAME   export-credentials の対象プロファイル。未指定時は対話で選択します。
 
 コマンド:
   -- の後に続くコマンドを、そのまま認証済み環境で exec します。
-  省略時は bash を起動（セッション型）。
+  省略時は bash を起動します。セッション型です。
 USAGE
 }
 
-# 引数解析（-- まで）
+# 引数解析。-- まで。
 ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -65,7 +65,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# 残りは実行コマンド（未指定なら bash）
+# 残りは実行コマンド。未指定なら bash。
 if [[ $# -gt 0 ]]; then
   CMD=("$@")
 else
@@ -81,7 +81,7 @@ apply_exports() {
   local line filtered=()
   while IFS= read -r line; do
     [[ -z "$line" ]] && continue
-    # export VAR=... の形式に限定（英数下線のみ許可）
+    # export VAR=... の形式に限定します。英数下線のみ許可します。
     if [[ "$line" =~ ^export[[:space:]]+[A-Z0-9_]+=.*$ ]]; then
       filtered+=("$line")
     fi
@@ -92,7 +92,7 @@ apply_exports() {
   fi
 }
 
-# 現在の環境で AWS アカウント情報を表示（必要に応じてプロファイル名も表示）
+# 現在の環境で AWS アカウント情報を表示します。プロファイル名が渡された場合は合わせて表示します。
 print_identity_current() {
   local __profile_name="${1:-}"
   if [[ -n "$__profile_name" ]]; then
@@ -141,13 +141,13 @@ assume_role_and_emit_exports() {
     return 0
   fi
 
-  # 入力補完（対話）: 入力は ask_silent で統一
+  # 入力補完。対話です。入力は ask_silent で統一します。
   if [[ -z "$ROLE_ARN" || -z "$MFA_ARN" ]]; then
     ui::ask_silent ROLE_ARN   with_aws "AssumeRoleのロールARN" "${ROLE_ARN:-}"
     ui::ask_silent MFA_ARN    with_aws "MFAデバイスARN" "${MFA_ARN:-}"
   fi
   if [[ -z "$BASE_PROFILE" ]]; then
-    ui::ask_silent BASE_PROFILE with_aws "ベースプロファイル名（未入力可）" "${BASE_PROFILE:-}"
+    ui::ask_silent BASE_PROFILE with_aws "ベースプロファイル名。未入力でも構いません。" "${BASE_PROFILE:-}"
   fi
   ui::ask_silent MFA_CODE with_aws "MFAコード(6桁)" "${MFA_CODE:-}"
 
@@ -171,7 +171,7 @@ assume_role_and_emit_exports() {
     return ${STATUS}
   fi
 
-  # 出力は4列（AKID, SK, TOKEN, EXPIRATION）
+  # 出力は4列です。AKID, SK, TOKEN, EXPIRATION。
   AKID=$(echo "$RESP" | awk '{print $1}')
   SK=$(echo   "$RESP" | awk '{print $2}')
   TOKEN=$(echo "$RESP" | awk '{print $3}')
@@ -251,7 +251,7 @@ case "$MODE" in
             picked="${PROFILES[$((idx-1))]}"
           fi
         else
-          # 名前一致検証（完全一致）
+          # 名前一致検証。完全一致です。
           for name in "${PROFILES[@]}"; do
             if [[ "$name" == "$ans" ]]; then picked="$name"; break; fi
           done
@@ -260,7 +260,7 @@ case "$MODE" in
           err "無効な入力です。番号または一覧にあるプロファイル名を指定してください。"
           continue
         fi
-        ui::info with_aws "選択の適用前に確認します（既定: N）"
+        ui::info with_aws "選択の適用前に確認します。既定: N。"
         ui::ask_yesno __CONFIRM with_aws "選択: $picked で実行しますか？" N
         if [[ "$__CONFIRM" == "true" ]]; then PROFILE="$picked"; break; fi
       done
@@ -271,20 +271,20 @@ case "$MODE" in
     STATUS=$?
     set -e
     if [[ $STATUS -ne 0 || -z "$CREDS" ]]; then
-      err "export-credentials に失敗しました（--profile=$PROFILE）。CLI v2/プロファイル設定をご確認ください。SSOプロファイルの場合は 'aws sso login --profile $PROFILE' を実行してから再試行してください。"
+      err "export-credentials に失敗しました。--profile=$PROFILE。CLI v2/プロファイル設定をご確認ください。SSOプロファイルの場合は 'aws sso login --profile $PROFILE' を実行してから再試行してください。"
       exit 1
     fi
     # セッショントークンの有無で分岐
     if printf '%s\n' "$CREDS" | grep -q 'AWS_SESSION_TOKEN='; then
       apply_exports <<< "$CREDS"
-      # 認証確認（環境変数ベース）
+      # 認証確認。環境変数ベースです。
       print_identity_current "$PROFILE"
     else
       info "選択プロファイルはセッション型ではありません。環境変数注入は行わず、AWS_PROFILE='$PROFILE' で実行します。"
       # 既存の環境変数クレデンシャルがあれば解除して、プロファイル解決を優先
       unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN 2>/dev/null || true
       export AWS_PROFILE="$PROFILE"
-      # 認証確認（AWS_PROFILE ベース）
+      # 認証確認。AWS_PROFILE ベースです。
       print_identity_current "$PROFILE"
     fi
     ;;
@@ -295,10 +295,10 @@ case "$MODE" in
     STATUS=$?
     set -e
     if [[ $STATUS -ne 0 ]]; then
-      err "AssumeRole 処理が失敗しました（引数/コードをご確認ください）"
+      err "AssumeRole 処理が失敗しました。引数/コードをご確認ください。"
       exit $STATUS
     fi
-    # 認証済みの場合、出力が空のことがあります（その場合は現環境を使用）
+    # 認証済みの場合、出力が空のことがあります。その場合は現環境を使用します。
     if [[ -n "$CREDS" ]]; then
       apply_exports <<< "$CREDS"
       # 環境変数ベースの認証に切り替えた場合は AWS_PROFILE を解除して混在を避ける
@@ -310,7 +310,7 @@ case "$MODE" in
 esac
 
 hdr "実行"
-# ラベルはコマンド名（bash/sh/zsh 経由なら第2引数のスクリプト名）
+# ラベルはコマンド名です。bash/sh/zsh 経由なら第2引数のスクリプト名です。
 __label="$(basename "${CMD[0]}")"
 case "${CMD[0]}" in
   bash|sh|zsh)

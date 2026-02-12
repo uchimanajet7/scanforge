@@ -1,7 +1,7 @@
 /**
  * ScanForge - QR ジオメトリユーティリティ
  *
- * QR コード（ISO/IEC 18004:2024 Model 2）のモジュール配置に関する計算を提供する。
+ * QR コードの ISO/IEC 18004:2024 Model 2 に基づくモジュール配置の計算を提供する。
  * ロゴオーバーレイ検証やレイアウト計算で使用する。
  */
 
@@ -55,8 +55,8 @@ const TIMING_INDEX = 6;
 
 /**
  * モジュール数から QR バージョンを推定
- * @param {number} moduleCount - データ部のモジュール数（静寂域を除く一辺の長さ）
- * @returns {number|null} バージョン（1〜40）
+ * @param {number} moduleCount - 静寂域を除く一辺の長さであるデータ部のモジュール数
+ * @returns {number|null} バージョン。範囲は 1 から 40。
  */
 export function deriveVersionFromModuleCount(moduleCount) {
   if (!Number.isFinite(moduleCount)) {
@@ -162,8 +162,8 @@ export function buildAlignmentPatternBounds(version, moduleCount) {
  * オーバーレイ領域と各種保護領域の交差を評価
  * @param {Object} params - 判定パラメータ
  * @param {number} params.moduleCount - データ部モジュール数
- * @param {number} params.start - オーバーレイ領域の開始インデックス（データ部基準）
- * @param {number} params.end - オーバーレイ領域の終了インデックス（データ部基準）
+ * @param {number} params.start - データ部を基準としたオーバーレイ領域の開始インデックス
+ * @param {number} params.end - データ部を基準としたオーバーレイ領域の終了インデックス
  * @param {number} [params.badgeMargin=0] - バッジ余白モジュール数
  * @param {number|null} [params.version=null] - QR バージョン
  * @returns {{finder:boolean,timing:boolean,alignment:Array<number>}}
@@ -185,7 +185,7 @@ export function evaluateReservedPatternConflicts({ moduleCount, start, end, badg
     }
   });
 
-  // タイミングパターン（行・列 index 6）
+// タイミングパターン。行と列の index は 6。
   if (lineIntersectsRange(TIMING_INDEX, expandedStart, expandedEnd)) {
     conflicts.timing = true;
   }

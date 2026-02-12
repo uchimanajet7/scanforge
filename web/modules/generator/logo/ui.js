@@ -150,7 +150,7 @@ export function updateLogoColorUi({ data, structural }) {
     const mode = getLogoColorMode();
     let label = accentColor;
     if (state.logoAccentFallback && mode === 'safe') {
-      label = `${accentColor}（finder を黒で描画）`;
+      label = `${accentColor}。finder は黒で描画します。`;
     }
     elements.logoAccentValue.textContent = label;
   }

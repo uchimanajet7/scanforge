@@ -1,5 +1,5 @@
 /**
- * 画像ジョブの実行ループ（scanFile 呼び出し）を担当する。
+ * 画像ジョブの実行ループを担当し、scanFile を呼び出す。
  */
 
 import { updateImageQueueJob } from '../../core/state/scanner/image-queue/mutations.js';

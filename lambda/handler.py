@@ -26,10 +26,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-SUPERSAMPLE = 8  # サブピクセル倍率（アンチエイリアスを抑えつつエッジを太らせる）
-MAX_OUTPUT_PIXELS = 2048  # サブピクセル後の最大画像サイズ（長辺上限）
+SUPERSAMPLE = 8  # サブピクセル倍率。アンチエイリアスを抑えつつエッジを太らせる。
+MAX_OUTPUT_PIXELS = 2048  # サブピクセル後の最大画像サイズ。長辺上限です。
 EPS = 1e-9
-MAX_IMAGE_BYTES = int(os.environ.get("MAX_IMAGE_BYTES", str(3 * 1024 * 1024)))  # /decode 入力上限（既定 3MB）
+MAX_IMAGE_BYTES = int(os.environ.get("MAX_IMAGE_BYTES", str(3 * 1024 * 1024)))  # /decode 入力上限。既定値は 3MB。
 BARCODE_URL_MAX_REDIRECTS = 3
 ALLOWED_IMAGE_CONTENT_TYPES = {"image/png", "image/jpeg", "image/webp", "image/svg+xml"}
 
@@ -265,7 +265,7 @@ def _flatten_quadratic(p0: Tuple[float, float], p1: Tuple[float, float], p2: Tup
 
 
 def _arc_to_center(p0: Tuple[float, float], rx: float, ry: float, phi: float, large: int, sweep: int, p1: Tuple[float, float]) -> Tuple[Tuple[float, float], float, float, float, float]:
-    # SVG arc を中心形式へ（実装は W3C 推奨手順の簡略版）
+    # SVG arc を中心形式へ変換する。実装は W3C 推奨手順の簡略版。
     if rx == 0 or ry == 0:
         return (p0, 0, 0, 0, 0)
     phi_rad = math.radians(phi % 360.0)
@@ -343,7 +343,7 @@ def _flatten_path(d: str) -> List[Tuple[List[Tuple[float, float]], bool]]:
             continue
         # number encountered: rewind one step
         nums = [token]
-        # helper to get n numbers (including first)
+        # 先頭も含めて n 個の数値を取得する補助関数。
         def take(n: int) -> List[float]:
             vals = [float(nums.pop(0))]
             for _ in range(n - 1):
@@ -484,7 +484,7 @@ def _render_svg(svg_bytes: bytes) -> Image.Image:
     # viewBox → viewport 変換行列
     vb_matrix = _compute_viewbox_matrix(width, height, view_box, root.get("preserveAspectRatio") or "xMidYMid meet")
 
-    # サブピクセル描画スケール（最大サイズを超える場合は縮小）
+    # サブピクセル描画スケール。最大サイズを超える場合は縮小する。
     base_scale = SUPERSAMPLE
     shrink = min(1.0, MAX_OUTPUT_PIXELS / max(width * base_scale, height * base_scale, 1.0))
     scale = base_scale * shrink
@@ -699,15 +699,15 @@ def _is_public_host(hostname: str) -> bool:
 def _fetch_barcode_url(url: str, max_bytes: int) -> Tuple[bytes, str]:
     current_url = (url or "").strip()
     if not _is_https_url(current_url):
-        raise _BarcodeFetchBadUrl("https のみ許可（http/file 等は拒否）")
+        raise _BarcodeFetchBadUrl("https のみ許可します。http と file は拒否します。")
 
     for i in range(BARCODE_URL_MAX_REDIRECTS + 1):
         p = urlparse(current_url)
         host = p.hostname or ""
         if not host:
-            raise _BarcodeFetchBadUrl("URL が不正です（host が空）")
+            raise _BarcodeFetchBadUrl("URL が不正です。host が空です。")
         if not _is_public_host(host):
-            raise _BarcodeFetchBadUrl("URL が不正です（プライベート/特殊アドレスは拒否）")
+            raise _BarcodeFetchBadUrl("URL が不正です。プライベートまたは特殊アドレスは拒否します。")
 
         try:
             resp = requests.get(
@@ -762,7 +762,7 @@ def _fetch_barcode_url(url: str, max_bytes: int) -> Tuple[bytes, str]:
             try:
                 resp.close()
             except Exception:
-                # close は後始末のみ。失敗しても本処理の結果（成功/例外）を優先する。
+                # close は後始末のみ。失敗しても本処理の結果は成功または例外を優先する。
                 pass
 
     raise _BarcodeFetchError("too_many_redirects")
@@ -812,7 +812,7 @@ def _handle_decode(payload: Dict[str, Any]) -> Dict[str, Any]:
 
     if barcode_data:
         if barcode_url:
-            logger.warning("barcodeUrl は無視されました（barcodeData を優先）")
+            logger.warning("barcodeUrl は無視されました。barcodeData を優先します。")
         try:
             image_bytes, content_type = _load_image_base64(barcode_data)
         except Exception as exc:
@@ -848,7 +848,7 @@ def _encode_qr(text: str, output: str) -> Dict[str, Any]:
     qr = segno.make(text, micro=False)
     buffer = BytesIO()
     if output == "svg":
-        # パスではなく矩形ベースの SVG を生成する（QR のセル構造をそのまま表現する）
+        # パスではなく矩形ベースの SVG を生成する。QR のセル構造をそのまま表現する。
         matrix = qr.matrix
         rows = len(matrix)
         cols = len(matrix[0]) if rows else 0

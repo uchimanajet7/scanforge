@@ -1,37 +1,24 @@
-# OS/エディタ
+# OS
 .DS_Store
 
-# 一時作業ディレクトリ（ローカルのみ）
-_temp_/
-
-# Static Web Server などのツールフォルダを除外（ルートのみ）
-/tools/
-
-# Python 仮想環境/ビルドキャッシュ
+# Python
 .venv/
 __pycache__/
 *.pyc
 
-# Terraform 作業生成物
+# Terraform
 infra/terraform/.terraform/
 infra/terraform/*.tfstate*
 infra/terraform/tfplan
 infra/terraform/build/
 infra/terraform/*.auto.tfvars
 
-# 生成物（追跡しない・一時生成の安全除外）
-# - レイヤZIPは infra/terraform/build/ に一元化（単体除外は不要）
-# - ビルド時の一時資材（失敗時に残っても誤追跡しないよう予防）
+# 生成物
 /.venv-build-layer
 /python
 scripts/deploy/.venv-build-layer
 scripts/deploy/python
 
-# Web ローカル起動時に生成されるバックアップ
+# ローカル
 /web/index.html.original
-
-# ドラフトやローカルのみは追跡しない
-docs/_drafts_
-docs/_local_
-image/_local_
-/_AI-VIOLATIONS_.md
+/tools/

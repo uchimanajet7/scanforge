@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# tfvars を生成する（非対話）。setup で取得した値を受け取り、必要項目のみを `infra/terraform/dev.auto.tfvars`（生成物 / Git 管理外）に出力する。
+# tfvars を非対話で生成する。setup で取得した値を受け取り、必要項目のみを `infra/terraform/dev.auto.tfvars` に出力する。
 # 形式の確認には `infra/terraform/dev.auto.tfvars.example` を参照する。
 set -euo pipefail
 
@@ -16,7 +16,7 @@ ARCH="x86_64"
 SNAPSTART="true"
 FUNCTION_NAME="scanforge-api"
 ALIAS_NAME="prod"
-TIMEOUT="10"
+TIMEOUT="15"
 MEMORY="512"
 TMP_MB="512"
 LOG_DAYS="14"
@@ -27,16 +27,16 @@ LAYER_PATH="build/scanforge-layer.zip"
 usage() {
   cat <<USAGE
 使い方: bash scripts/deploy/make_tfvars.sh --region <REGION> [オプション]
-  --region <REGION>           (必須)
-  --arch <arm64|x86_64>       (既定 x86_64)
-  --snapstart <true|false>    (既定 true)
-  --function-name <NAME>      (既定 scanforge-api)
-  --alias-name <NAME>         (既定 prod)
-  --timeout <seconds>         (既定 10)
-  --memory <mb>               (既定 512)
-  --tmp-mb <mb>               (既定 512)
-  --log-days <days>           (既定 14)
-  --file <PATH>               (既定 infra/terraform/dev.auto.tfvars)
+  --region <REGION>           必須
+  --arch <arm64|x86_64>       既定値は x86_64
+  --snapstart <true|false>    既定値は true
+  --function-name <NAME>      既定値は scanforge-api
+  --alias-name <NAME>         既定値は prod
+  --timeout <seconds>         既定値は 15
+  --memory <mb>               既定値は 512
+  --tmp-mb <mb>               既定値は 512
+  --log-days <days>           既定値は 14
+  --file <PATH>               既定値は infra/terraform/dev.auto.tfvars
   --yes                       上書き確認をスキップ
 USAGE
 }

@@ -1,7 +1,7 @@
 /**
  * 永続化サブストア
  *
- * `localStorage` との同期処理（復元・保存・自動保存）を管理する。
+ * `localStorage` との同期処理として、復元、保存、自動保存を管理する。
  */
 
 import { logger } from '../logger.js';

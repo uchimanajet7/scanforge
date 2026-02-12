@@ -2,10 +2,10 @@
 set -euo pipefail
 
 # ============================================================================
-# ローカル API（lambda/handler.py）用の Python venv を作成し、依存をインストールする。
+# tools/api の Python 仮想環境を作成し、lambda/requirements.txt の依存をインストールする。
 # - 依存定義: lambda/requirements.txt
-# - venv 置き場: tools/api/.venv（git 管理外 / ホスト環境へ影響させない）
-# - 一時領域: tools/api/tmp（OS の /tmp を使わない）
+# - 仮想環境の配置先: tools/api/.venv
+# - 一時領域: tools/api/tmp。オペレーティング・システムの /tmp を使わない。
 # ============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

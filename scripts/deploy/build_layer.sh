@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 依存レイヤーZIP作成（manylinux wheel を優先、Docker不要）
+# 依存レイヤーZIP作成。manylinux wheel を優先します。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

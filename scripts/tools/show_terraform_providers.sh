@@ -86,6 +86,5 @@ if awk '
 ' .terraform.lock.hcl; then
   ui::ok tools "ロックファイルの主要行を出力しました。versions.tf の制約と乖離が無いか確認してください。"
 else
-  ui::warn tools "対象行が見つかりませんでした。必要に応じて .terraform.lock.hcl を直接参照してください。"
+  ui::warn tools "対象行が見つかりませんでした。.terraform.lock.hcl を直接参照してください。"
 fi
-

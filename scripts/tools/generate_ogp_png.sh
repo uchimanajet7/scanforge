@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # OGP PNG 生成スクリプト
 # 目的: web/ogp.svg から 1200x630 の ogp.png を生成します。
-# 依存: Google Chrome/Chromium のヘッドレスモード（インストール済み想定）。
+# 依存: Google Chrome/Chromium のヘッドレスモード。Google Chrome/Chromium がインストールされている必要があります。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -44,7 +44,7 @@ if [[ ! -f "$SVG_PATH" ]]; then
   exit 1
 fi
 
-# Chrome/Chromium の実体を探す（macOS/一般Linux対応）
+# Chrome/Chromium の実体を探します。対象は macOS と一般的な Linux です。
 find_chrome() {
   local candidates=(
     "google-chrome"
@@ -103,4 +103,3 @@ if [[ ! -s "$PNG_PATH" ]]; then
 fi
 
 ui::ok ogp "生成完了: $PNG_PATH (1200x630)"
-

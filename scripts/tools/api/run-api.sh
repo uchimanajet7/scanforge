@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # ============================================================================
-# ローカル API サーバー起動（lambda/handler.py を HTTP API として起動）
+# ローカル API サーバー起動。
+# - lambda/handler.py を HTTP API として起動する。
 # - /encode /decode をローカルでテスト確認するための簡易サーバー
 # ============================================================================
 
@@ -66,7 +67,7 @@ VENV_DIR="${TOOLS_DIR}/.venv"
 VENV_PY="${VENV_DIR}/bin/python"
 
 if [[ ! -x "${VENV_PY}" ]]; then
-  fail "venv が未作成です。先に ./scripts/tools/api/setup-venv.sh（または start-local-api.sh）を実行してください。"
+  fail "venv が未作成です。先に ./scripts/tools/api/setup-venv.sh か start-local-api.sh を実行してください。"
 fi
 
 terminate_conflicts() {
@@ -229,18 +230,18 @@ wait_for_ready() {
     ((loops++))
 
     if ! kill -0 "${SERVER_PID}" 2>/dev/null; then
-      fail "ローカル API が起動直後に終了しました（PID=${SERVER_PID}）。"
+      fail "ローカル API が起動直後に終了しました。PID=${SERVER_PID} です。"
     fi
 
     if lsof -nP -p "${SERVER_PID}" -iTCP:"${API_PORT}" -sTCP:LISTEN >/dev/null 2>&1; then
-      ui::ok "${LOG_TAG}" "ready: http://${API_HOST}:${API_PORT}/（POST /encode, POST /decode）"
+      ui::ok "${LOG_TAG}" "ready: http://${API_HOST}:${API_PORT}/。POST /encode, POST /decode に対応。"
       ui::info "${LOG_TAG}" "停止: Ctrl+C"
       ui::info "${LOG_TAG}" "別ターミナルから停止する場合: kill ${SERVER_PID}"
       return 0
     fi
 
     if (( loops > 100 )); then
-      ui::warn "${LOG_TAG}" "ready 確認がタイムアウトしました（10s）。プロセスは起動しています: PID=${SERVER_PID}"
+      ui::warn "${LOG_TAG}" "ready 確認がタイムアウトしました。10 秒です。プロセスは起動しています: PID=${SERVER_PID}"
       return 0
     fi
 

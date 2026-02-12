@@ -54,10 +54,10 @@ export function createGenerateRunner({ onAfterSuccess } = {}) {
       const structuralColorLabel = result.logoPriority ? result.logoStructuralColor : LOGO_DEFAULT_COLOR;
       const fidelityLabel = result.logoPriority
         ? fidelityMode === 'safe'
-          ? '（読み取り優先）'
-          : '（忠実再現）'
+          ? '。読み取りを優先します。'
+          : '。忠実に再現します。'
         : '';
-      let status = `${modeLabel}${fidelityLabel}で生成しました（データ: ${dataColorLabel} / 構造: ${structuralColorLabel}）。読み取り可否はご自身で確認してください。`;
+      let status = `${modeLabel}${fidelityLabel}で生成しました。データは ${dataColorLabel}、構造は ${structuralColorLabel} です。読み取り可否はご自身で確認してください。`;
       if (output === 'png' && !copySupported) {
         toast.warning('ブラウザが画像のクリップボードコピーに対応していません。ダウンロードをご利用ください。');
         status += ' ブラウザが画像コピーに対応していないため、ダウンロード機能をご利用ください。';

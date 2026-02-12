@@ -30,7 +30,7 @@ function handlePopState(event) {
 
 function handleOnline() {
   logger.debug('network:online');
-  // 必要に応じて同期処理などを追加する。
+  // オンライン復帰時はログのみ出力する。
 }
 
 function handleOffline() {

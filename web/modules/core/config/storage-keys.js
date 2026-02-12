@@ -9,7 +9,7 @@ export const STORAGE_KEYS = Object.freeze({
 });
 
 /**
- * 旧キー（クリーンアップ対象）。
+ * 旧キー。クリーンアップ対象。
  */
 export const OBSOLETE_KEYS = Object.freeze({
   theme: 'scanforge.theme',

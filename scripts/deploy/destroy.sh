@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Terraform 管理リソースを削除します（破壊的操作）。
+# Terraform 管理リソースを削除します。破壊的操作です。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -25,7 +25,7 @@ usage() {
   cat <<USAGE
 使い方: bash scripts/deploy/destroy.sh [--yes]
   - Terraform 管理の全リソースを削除します。
-  - 実行前に確認します（既定: N）。--yes 指定時のみ無人で実行します。
+  - 実行前に確認します。既定: N。--yes 指定時のみ無人で実行します。
 USAGE
 }
 
@@ -40,10 +40,10 @@ done
 ui::hdr destroy "destroy"
 
 if [[ "$YES" != "true" ]]; then
-  ui::info destroy "destroy の前に確認します（既定: N）"
+  ui::info destroy "destroy の前に確認します。既定: N。"
   ui::ask_yesno __GO destroy "destroy を実行しますか？" N
   if [[ "$__GO" != "true" ]]; then
-    ui::info destroy "中止しました（何も変更していません）"
+    ui::info destroy "中止しました。何も変更していません。"
     exit 0
   fi
 fi

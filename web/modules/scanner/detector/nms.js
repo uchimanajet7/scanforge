@@ -1,5 +1,5 @@
 /**
- * 非極大抑制（NMS）ロジック。
+ * 非極大抑制のロジック。
  */
 
 export function applyNonMaxSuppression(results, iouThreshold = 0.5) {

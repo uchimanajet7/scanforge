@@ -16,7 +16,7 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/build/lambda.zip"
 }
 
-# 依存レイヤー（指定がある場合のみ作成）
+# 依存レイヤー。指定がある場合のみ作成する
 resource "aws_lambda_layer_version" "deps" {
   count                    = local.has_layer_zip && var.existing_layer_arn == "" ? 1 : 0
   layer_name               = "${var.function_name}-deps"
@@ -26,7 +26,7 @@ resource "aws_lambda_layer_version" "deps" {
   description              = "ScanForge dependencies layer"
 }
 
-# IAMロール（基本ログのみ）
+# IAMロール。基本ログのみ
 resource "aws_iam_role" "lambda" {
   name = "${var.function_name}-exec"
   assume_role_policy = jsonencode({
@@ -85,7 +85,7 @@ resource "aws_lambda_alias" "prod" {
   function_version = aws_lambda_function.api.version
 }
 
-# Function URL（認証なし, CORS 任意）
+# Function URL。認証なし。CORS は var.cors_allow_origins で指定する
 resource "aws_lambda_function_url" "url" {
   function_name      = aws_lambda_function.api.function_name
   qualifier          = aws_lambda_alias.prod.name

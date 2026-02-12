@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# ShellCheck ラッパー（ローカル/CI共通）
+# ShellCheck ラッパー。ローカルと継続的インテグレーションの共通
 # 用途:
 #   - 警告もエラーとして扱う: bash scripts/tools/lint_shell.sh --strict
-#   - 既定（警告は許容）:     bash scripts/tools/lint_shell.sh
+#   - 既定: 警告は許容する。 bash scripts/tools/lint_shell.sh
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-# UI 初期化（存在しない環境でも動くよう best-effort）
+# UI ライブラリがある場合は初期化し、無い場合は簡易ログで代替する。
 if [[ -f "${ROOT_DIR}/scripts/lib/ui.sh" ]]; then
   # shellcheck disable=SC1091
   source "${ROOT_DIR}/scripts/lib/ui.sh"; ui::init || true
@@ -26,7 +26,7 @@ STRICT="false"
 usage() {
   cat <<'USAGE'
 使い方: bash scripts/tools/lint_shell.sh [--strict]
-  --strict  警告もエラーとして扱います（CI相当）
+  --strict  警告もエラーとして扱います。継続的インテグレーション相当です。
 USAGE
 }
 
@@ -39,11 +39,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 if ! command -v shellcheck >/dev/null 2>&1; then
-  err "shellcheck が見つかりません。インストール後に再実行してください（例: 'brew install shellcheck'）。"
+  err "shellcheck が見つかりません。インストールして PATH に通した後に再実行してください。"
   exit 127
 fi
 
-# 対象ファイル一覧（優先: git / フォールバック: find）
+# 対象ファイル一覧。まず git を試し、取得できなければ find を使う
 FILES_LIST=""
 if command -v git >/dev/null 2>&1; then
   set +e
@@ -69,7 +69,6 @@ done <<< "$FILES_LIST"
 LEVEL="warning"
 [[ "$STRICT" == "true" ]] && LEVEL="error"
 
-info "ShellCheck を実行します（対象=$#, level=${LEVEL}）"
+info "ShellCheck を実行します。対象=$#、level=${LEVEL}"
 shellcheck -S "$LEVEL" "$@"
-ok "ShellCheck OK（level=${LEVEL}）"
-
+ok "ShellCheck OK。level=${LEVEL}"

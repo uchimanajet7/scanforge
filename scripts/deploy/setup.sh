@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# デプロイ設定の入力（必要項目のみ、対話で収集して __OUT_* を返す）
+# デプロイ設定の入力。必要項目のみを対話で収集し、__OUT_* を返します。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -39,7 +39,7 @@ done
 
 ui::hdr setup "設定入力(setup)"
 
-# 既定リージョンの算出（base-profile優先）
+# 既定リージョンの算出。base-profile を優先します。
 DEFAULT_REGION=""
 if [[ -n "$BASE_PROFILE" ]]; then
   set +e; DEFAULT_REGION=$(aws configure get region --profile "$BASE_PROFILE" 2>/dev/null); set -e
@@ -53,21 +53,21 @@ DEFAULT_ARCH="x86_64"
 DEFAULT_SNAPSTART="true"
 DEFAULT_APPLY_YES="false"
 
-# 入力収集（確認付き）
+# 入力収集。確認付きです。
 if [[ -n "$REGION" ]]; then
-  ui::info setup "AWSリージョン（指定済み）: ${REGION}"
+  ui::info setup "AWSリージョン。指定済みです: ${REGION}"
 elif [[ -n "$DEFAULT_REGION" ]]; then
-  ui::info setup "既定: リージョン=${DEFAULT_REGION}（Enterで採用）"
+  ui::info setup "既定: リージョン=${DEFAULT_REGION}。Enter で採用します。"
   ui::ask_silent REGION setup "AWSリージョン" "$DEFAULT_REGION"
 else
-  ui::ask REGION setup "AWSリージョン (例 us-west-2)" ""
+  ui::ask REGION setup "AWSリージョン。例: us-west-2" ""
 fi
 
-ui::info setup "既定: アーキテクチャ=${DEFAULT_ARCH}（Enterで採用）"
-ui::ask_silent ARCH setup "アーキテクチャ（arm64|x86_64）" "$DEFAULT_ARCH"
+ui::info setup "既定: アーキテクチャ=${DEFAULT_ARCH}。Enter で採用します。"
+ui::ask_silent ARCH setup "アーキテクチャ。arm64|x86_64" "$DEFAULT_ARCH"
 
 APPLY_YES_UPPER="$(printf '%s' "${DEFAULT_APPLY_YES}" | tr '[:lower:]' '[:upper:]')"
-ui::info setup "自動承諾を有効にする前に確認します（既定: N）"
+ui::info setup "自動承諾を有効にする前に確認します。既定: N。"
 ui::ask_yesno APPLY_YES setup "terraform apply を自動承諾しますか？" "${APPLY_YES_UPPER}"
 
 SNAPSTART="${DEFAULT_SNAPSTART}"
