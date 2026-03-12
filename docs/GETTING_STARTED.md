@@ -37,7 +37,10 @@
 
 ### 1.1 GitHub Pages: fork で公開する場合
 - 対象: このリポジトリを fork した自分のリポジトリ等で、`web/` を GitHub Pages に公開したい場合。
-- 手順: GitHub の Pages 設定で公開元を設定します。公開設定の詳細は GitHub 公式ドキュメントを参照してください。
+- 手順:
+  1. `.github/workflows/pages.yml` を有効のまま保持します。
+  2. GitHub の Settings → Pages で Source を `GitHub Actions` に変更します。
+  3. `main` へ push すると workflow が `web/` を artifact 化し、GitHub Pages へデプロイします。
 - 参考: 公式ドキュメント: `https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site`
 
 ## 2) API を最短デプロイ

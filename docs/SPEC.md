@@ -2,7 +2,7 @@
 
 ## ドキュメント情報
 - 作成日: 2025-10-15
-- 最終更新: 2026-01-09
+- 最終更新: 2026-03-12
 - 本書の目的: 現行実装の仕様を説明する
 
 ## 表記方針
@@ -29,7 +29,7 @@ ScanForge は、バーコード/QR の **読み取り** と **生成** を提供
 ## 2. システム構成: 現行
 
 ### 2.1 WebUI: `web/`
-- 配信: 静的ホスティング。例: GitHub Pages。
+- 配信: GitHub Pages。`main` への push を契機に workflow が `web/` を artifact 化し、GitHub Pages へデプロイする。
 - エントリ: `web/index.html` + `web/app.js`: ES Modules
 - テーマ: ライト固定。
 - OGP: `web/index.html` のメタで `ogp.png` を参照する

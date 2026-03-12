@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# GitHub Pages 有効化/デプロイに必要な最小権限
+# GitHub Pages 有効化とデプロイに必要な最小権限
 permissions:
   contents: read
   pages: write
@@ -24,13 +24,13 @@ jobs:
       id-token: write
     steps:
       - name: チェックアウト
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Pages を設定
         uses: actions/configure-pages@v5
 
       - name: web/ を artifact としてアップロード
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: web
 
@@ -48,4 +48,3 @@ jobs:
       - name: GitHub Pages へデプロイ
         id: deployment
         uses: actions/deploy-pages@v4
-

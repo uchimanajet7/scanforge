@@ -7,12 +7,17 @@
 - 安定性: Lambda ランタイムは Python 3.13 を既定。SnapStart 対応を優先。
 - アーキテクチャ: 既定は `x86_64`。依存 wheel の入手性を優先。`arm64` を使う場合はレイヤーを同アーキで再構築する。
 - ピン留め: Lambda 依存は `lambda/requirements.txt` に明示ピン留め。Web は `web/index.html` の CDN バージョンを固定し、ZXing 読み込みは `web/modules/scanner/detector/zxing/loader.js` で `@latest` を使用。
+- GitHub Actions: Node.js 24 対応の公開版を優先して使う。現時点では `actions/checkout@v5` と `hashicorp/setup-terraform@v4` を使い、GitHub Pages は公式の `configure-pages` `upload-pages-artifact` `deploy-pages` 構成を維持する。
+- 監視: Dependabot で GitHub Actions の更新を週次確認する。
 
 ## 現在の固定/推奨バージョン: 取得基準
 - Lambda ランタイム: Python 3.13
 - アーキテクチャ: x86_64
 - Terraform: 1.5+。
 - Terraform Provider: `infra/terraform/versions.tf` と `infra/terraform/.terraform.lock.hcl` に従う
+- GitHub Actions のチェックアウト: `actions/checkout@v5`
+- GitHub Actions の Terraform セットアップ: `hashicorp/setup-terraform@v4`
+- GitHub Pages 公開: `actions/configure-pages@v5` `actions/upload-pages-artifact@v4` `actions/deploy-pages@v4`
 
 ## アップグレードの基本手順: 共通
 1) 変更対象を決める。例: Pillow / zxing-cpp / Web CDN / Provider など。
@@ -60,6 +65,20 @@
 ## Terraform CLI
 - 取得方法: `terraform -version`
 - 更新後: `bash scripts/tools/fmt_terraform.sh --validate` を実行し、`bash scripts/deploy/with_aws.sh -- bash scripts/deploy/tf_plan.sh` で差分を確認してください。
+- GitHub Actions 上の Terraform CLI は `hashicorp/setup-terraform@v4` で導入します。
+
+## GitHub Actions
+- 対象: `.github/workflows/ci.yml` と `.github/workflows/pages.yml`
+- 更新方針:
+  1) Node.js 24 対応の公式 action を優先採用する。現時点では `actions/checkout@v5` と `hashicorp/setup-terraform@v4` を使う。
+  2) GitHub Pages は公式 workflow を維持し、`configure-pages` `upload-pages-artifact` `deploy-pages` の更新は Dependabot で追跡する。
+  3) 未対応 action の公式な Node.js 24 対応版が公開されたら、その時点で採用する。
+
+## Dependabot
+- 管理ファイル: `.github/dependabot.yml`
+- 監視対象:
+  - GitHub Actions: `/`
+- 運用: 週次で更新候補の Pull Request を確認し、必要な変更だけをレビューして取り込む。
 
 ## Terraform AWS Provider
 - 管理: `infra/terraform/.terraform.lock.hcl`: ロックファイル。`infra/terraform/versions.tf`: バージョン範囲。
