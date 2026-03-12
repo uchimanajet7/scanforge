@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: チェックアウト
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: ShellCheck をインストール
         run: |
@@ -33,7 +33,7 @@ jobs:
       contents: write
     steps:
       - name: チェックアウト
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Terraform セットアップ
         uses: hashicorp/setup-terraform@v4
