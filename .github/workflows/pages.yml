@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Pages を設定
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: web/ を artifact としてアップロード
         uses: actions/upload-pages-artifact@v4
