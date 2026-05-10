@@ -8,7 +8,7 @@
 - アーキテクチャ: 既定は `x86_64`。依存 wheel の入手性を優先。`arm64` を使う場合はレイヤーを同アーキで再構築する。
 - ピン留め: Lambda 依存は `lambda/requirements.txt` に明示ピン留め。Web は `web/index.html` の CDN バージョンを固定し、ZXing 読み込みは `web/modules/scanner/detector/zxing/loader.js` で `@latest` を使用。
 - GitHub Actions: Node.js 24 対応の公開版を優先して使う。現時点では `actions/checkout@v6` と `hashicorp/setup-terraform@v4` を使い、GitHub Pages は公式の `configure-pages` `upload-pages-artifact` `deploy-pages` 構成を維持する。
-- 監視: Dependabot で GitHub Actions の更新を週次確認する。
+- 監視: Dependabot で GitHub Actions と Lambda Python 依存の更新を週次確認する。
 
 ## 現在の固定/推奨バージョン: 取得基準
 - Lambda ランタイム: Python 3.13
@@ -17,7 +17,7 @@
 - Terraform Provider: `infra/terraform/versions.tf` と `infra/terraform/.terraform.lock.hcl` に従う
 - GitHub Actions のチェックアウト: `actions/checkout@v6`
 - GitHub Actions の Terraform セットアップ: `hashicorp/setup-terraform@v4`
-- GitHub Pages 公開: `actions/configure-pages@v5` `actions/upload-pages-artifact@v4` `actions/deploy-pages@v4`
+- GitHub Pages 公開: `actions/configure-pages@v6` `actions/upload-pages-artifact@v5` `actions/deploy-pages@v5`
 
 ## アップグレードの基本手順: 共通
 1) 変更対象を決める。例: Pillow / zxing-cpp / Web CDN / Provider など。
@@ -78,6 +78,7 @@
 - 管理ファイル: `.github/dependabot.yml`
 - 監視対象:
   - GitHub Actions: `/`
+  - Lambda Python 依存: `/lambda`
 - 運用: 週次で更新候補の Pull Request を確認し、必要な変更だけをレビューして取り込む。
 
 ## Terraform AWS Provider
