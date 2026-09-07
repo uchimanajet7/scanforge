@@ -16,6 +16,7 @@ export async function renderBarcode({
   transparent,
   quietModules,
   targetSizePx,
+  signal,
 }) {
   const state = getState();
   const logoIntent = formatKey === 'qr_code' && state.logoPriority;
@@ -74,6 +75,7 @@ export async function renderBarcode({
       pngBlob: output === 'png' ? qrResult.pngBlob : null,
     };
 
+    signal?.throwIfAborted();
     renderPreviewCanvas(qrResult.canvas);
     return result;
   }
@@ -88,6 +90,7 @@ export async function renderBarcode({
     targetSizePx,
   });
 
+  signal?.throwIfAborted();
   renderPreviewCanvas(genericResult.canvas);
   return genericResult.result;
 }

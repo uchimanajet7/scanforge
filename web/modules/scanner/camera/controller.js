@@ -12,6 +12,7 @@ import {
   getVideoElement,
   getCurrentDeviceId,
   getDeviceList,
+  getPermissionState,
 } from './stream.js';
 import {
   enumerateDevices,
@@ -40,6 +41,7 @@ export {
   getVideoElement,
   getCurrentDeviceId,
   getDeviceList,
+  getPermissionState,
   enumerateDevices,
   switchDevice,
   switchToNextCamera,
@@ -68,6 +70,7 @@ export default {
   getVideoElement,
   getCurrentDeviceId,
   getDeviceList,
+  getPermissionState,
   init,
   CameraPermissionError,
   CameraNotFoundError,

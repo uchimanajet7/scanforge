@@ -7,7 +7,7 @@ import { clearCache } from '../core/dom/query.js';
 
 export default function createPrimaryControlModule(context, deps) {
   const { elements, state, scanner, logger } = context;
-  const { statusBar, toggles, deviceSelect } = deps;
+  const { statusBar, deviceSelect } = deps;
 
   const listeners = [];
 
@@ -54,15 +54,16 @@ export default function createPrimaryControlModule(context, deps) {
       return;
     }
 
-    const deviceId = deviceSelect.getSelectedDeviceId();
-    const formats = toggles.getSelectedFormats();
-
     statusBar.setPrimaryButtonState('starting', true);
     try {
-      await scanner.startScan(videoElement, { deviceId, formats });
+      await scanner.startScanFromCurrentState({ videoElement });
       await deviceSelect.refreshDevices();
     } catch (error) {
-      logger.error('scanner:primary:start-error', error);
+      if (error instanceof scanner.CameraStartStoppedError) {
+        logger.debug('scanner:primary:start-cancelled');
+      } else {
+        logger.error('scanner:primary:start-error', error);
+      }
       statusBar.setPrimaryButtonState('idle');
     }
   }

@@ -1,6 +1,6 @@
 import { getHistoryById } from '../../../data/history/queries.js';
 import { removeHistoryEntry, clearHistoryEntries } from '../../../data/history/commands.js';
-import { exportHistoryAsJson } from '../../../data/history/exporters.js';
+import { requestHistoryJsonDownload } from '../../../data/history/download.js';
 import { formatExportSuccessMessage, getHistoryCopyValue } from './formatters.js';
 
 const COPY_SUCCESS_MESSAGE = '内容をコピーしました。';
@@ -69,11 +69,8 @@ export function createHistoryActions({
 
   function exportAll() {
     try {
-      const json = exportHistoryAsJson();
-      const blob = new Blob([json], { type: 'application/json' });
-      const fileName = `scanforge-history-${Date.now()}.json`;
-      downloadBlob(blob, fileName);
-      const message = formatExportSuccessMessage(fileName);
+      const result = requestHistoryJsonDownload({ downloadBlob });
+      const message = formatExportSuccessMessage(result.fileName);
       toast?.success?.(message);
       announceMessage(message);
     } catch (error) {

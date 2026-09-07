@@ -10,7 +10,8 @@ import zxing from './detector/zxing-adapter.js';
 import { getCurrentEngine } from './context.js';
 import { handleDetection } from './live/controller.js';
 
-async function scanCurrentFrame() {
+async function scanCurrentFrame(options = {}) {
+  const { signal } = options;
   const videoElement = camera.getVideoElement();
   if (!videoElement) {
     throw new Error('ビデオ要素がありません');
@@ -20,6 +21,7 @@ async function scanCurrentFrame() {
 
   try {
     logger.debug('scanner:manual:start');
+    signal?.throwIfAborted();
     const canvas = camera.captureFrame({ format: 'canvas', mirror: false });
 
     let results = [];
@@ -29,15 +31,22 @@ async function scanCurrentFrame() {
       results = await zxing.detect(canvas);
     }
 
+    signal?.throwIfAborted();
+
+    let accepted = [];
     if (results.length > 0) {
-      handleDetection(results, { force: true, source: 'manual' });
+      accepted = handleDetection(results, { force: true, source: 'manual' });
     } else {
       toast.info('コードが検出されませんでした');
     }
 
     logger.debug('scanner:manual:complete', { count: results.length });
-    return results;
+    return accepted;
   } catch (error) {
+    if (signal?.aborted) {
+      throw signal.reason;
+    }
+
     logger.error('手動スキャンエラー', error);
     toast.error('スキャンに失敗しました');
     throw error;

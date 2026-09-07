@@ -25,9 +25,12 @@ import {
   stopImageProcessing,
 } from './queue/controller.js';
 import {
+  CameraStartStoppedError,
+  isCameraStartPending,
   pauseScan,
   resumeScan,
   startScan,
+  startScanFromCurrentState,
   stopScan,
 } from './live/controller.js';
 import { scanCurrentFrame } from './manual-scan.js';
@@ -38,10 +41,16 @@ import {
 } from './device-manager.js';
 import {
   getDebugInfo,
+  getScannerStatus,
   isCameraActive,
   isScanning,
 } from './status.js';
 import { resetContext } from './context.js';
+import {
+  CameraInUseError,
+  CameraNotFoundError,
+  CameraPermissionError,
+} from './camera/errors.js';
 
 async function initScanner() {
   logger.debug('scanner:init:start');
@@ -75,13 +84,19 @@ async function cleanup() {
 }
 
 export {
+  CameraStartStoppedError,
+  CameraInUseError,
+  CameraNotFoundError,
+  CameraPermissionError,
   cancelImageJob,
   clearImageJobsByStatus,
   cleanup,
   enqueueImageFiles,
   getDebugInfo,
+  getScannerStatus,
   initScanner,
   isCameraActive,
+  isCameraStartPending,
   isScanning,
   pauseScan,
   refreshDeviceList,
@@ -93,14 +108,17 @@ export {
   stopImageProcessing,
   scanCurrentFrame,
   startScan,
+  startScanFromCurrentState,
   stopScan,
   switchCamera,
   switchToNextCamera,
 };
 
 export default {
+  CameraStartStoppedError,
   initScanner,
   startScan,
+  startScanFromCurrentState,
   stopScan,
   pauseScan,
   resumeScan,
@@ -110,7 +128,9 @@ export default {
   refreshDeviceList,
   isScanning,
   isCameraActive,
+  isCameraStartPending,
   getDebugInfo,
+  getScannerStatus,
   cleanup,
   enqueueImageFiles,
   cancelImageJob,
@@ -120,4 +140,7 @@ export default {
   removeImageJob,
   resetImageQueue,
   stopImageProcessing,
+  CameraInUseError,
+  CameraNotFoundError,
+  CameraPermissionError,
 };

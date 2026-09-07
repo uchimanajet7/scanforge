@@ -10,7 +10,7 @@ export function getHistory(options = {}) {
     sortOrder = 'desc',
   } = options;
 
-  let items = getState('history.items') || [];
+  let items = [...(getState('history.items') || [])];
 
   if (format) {
     items = items.filter((item) => item.format === format);

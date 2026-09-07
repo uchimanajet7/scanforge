@@ -96,12 +96,9 @@ export function notifyError(operation, err) {
   });
 }
 
-export function notifyPermissionError() {
-  error('カメラへのアクセスが拒否されました', {
-    action: () => {
-      window.open('https://support.google.com/chrome/answer/2693767', '_blank');
-    },
-    actionLabel: 'ヘルプ',
+export function notifyPermissionRequired() {
+  warning('カメラの許可が必要です', {
+    description: 'ブラウザーのサイト設定またはOSのカメラ設定で許可し、もう一度カメラを開始してください。',
     duration: 0,
   });
 }
@@ -118,5 +115,5 @@ export default {
   clear,
   notifyDetection,
   notifyError,
-  notifyPermissionError,
+  notifyPermissionRequired,
 };

@@ -17,6 +17,7 @@
 操作の要点: 抜粋
 - スキャン: カメラで QR / バーコードを読み取り、履歴へ追加
 - 生成: テキストから QR / バーコードを生成。例: Code 128/EAN-13/UPC-A/PDF417/Data Matrix。出力: PNG/SVG。
+- エージェント連携: WebMCP 対応ブラウザーでは、同じ画面状態と既存製品処理を使うコード生成、成果物の直接受信、明示時のブラウザーダウンロード、権限判断を人に残したカメラ開始・1回スキャン・停止、履歴の読取り・JSON受信を10個のサイトツールとして利用できます。生成PNG・SVG・履歴JSONは会話へ直接受信でき、明示的なブラウザーダウンロードが停止した場合も、同一成果物を `transferId` で直接受信できます。DOM操作には切り替えず、画面ボタンは直接受信も利用できない場合の最終手段です。通常画面へWebMCP専用UIは追加しません。利用条件と通常利用による確認手順は `docs/WEB_DEV_GUIDE.md` を参照してください。
 
 ## API クイックスタート
 - 対話: `bash scripts/deploy/with_aws.sh -- bash scripts/deploy/deploy.sh`。推奨です。
@@ -48,6 +49,8 @@
 - はじめに: `docs/GETTING_STARTED.md`
 - デプロイ手順・トラブルシュート: `docs/DEPLOY.md`
 - 仕様: 構成/ラッパー仕様/API。 `docs/SPEC.md`
+- WebMCP 仕様: `docs/WEBMCP_SPEC.md`
+- WebUI 開発・WebMCP 確認: `docs/WEB_DEV_GUIDE.md`
 - バージョン運用: `docs/VERSIONS.md`
 
 ## ライセンス

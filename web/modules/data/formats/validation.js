@@ -88,10 +88,15 @@ export function validateText(text, format) {
 
 function calculateCheckDigit(text, format) {
   if (['ean_13', 'ean_8', 'upc_a', 'upc_e'].includes(format)) {
+    const useRightAlignedWeights = ['ean_13', 'upc_a'].includes(format);
     let sum = 0;
     for (let i = 0; i < text.length; i += 1) {
       const digit = Number.parseInt(text[i], 10);
-      sum += digit * (i % 2 === 0 ? 1 : 3);
+      const positionFromRight = text.length - 1 - i;
+      const weight = useRightAlignedWeights
+        ? (positionFromRight % 2 === 0 ? 3 : 1)
+        : (i % 2 === 0 ? 1 : 3);
+      sum += digit * weight;
     }
     return String((10 - (sum % 10)) % 10);
   }

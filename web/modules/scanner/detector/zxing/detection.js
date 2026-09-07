@@ -17,6 +17,48 @@ import {
 import { loadLibrary } from './loader.js';
 import { resolveBarcodeFormatName, calculateBoundingBox } from './utils.js';
 
+function getAbortReason(signal) {
+  if (signal?.reason !== undefined) {
+    return signal.reason;
+  }
+  const error = new Error('The operation was aborted');
+  error.name = 'AbortError';
+  return error;
+}
+
+async function waitForDecodeControl(decodePromise, signal) {
+  if (!signal) {
+    return decodePromise;
+  }
+
+  signal.throwIfAborted();
+  let abortHandler = null;
+  const abortPromise = new Promise((_, reject) => {
+    abortHandler = () => reject(getAbortReason(signal));
+    if (signal.aborted) {
+      abortHandler();
+      return;
+    }
+    signal.addEventListener('abort', abortHandler, { once: true });
+  });
+
+  try {
+    const control = await Promise.race([decodePromise, abortPromise]);
+    signal.throwIfAborted();
+    return control;
+  } catch (error) {
+    if (signal.aborted) {
+      decodePromise.then(control => control?.stop?.()).catch(() => {});
+      throw getAbortReason(signal);
+    }
+    throw error;
+  } finally {
+    if (abortHandler) {
+      signal.removeEventListener('abort', abortHandler);
+    }
+  }
+}
+
 export async function initialize(targetFormats = null) {
   if (!getCodeReader()) {
     await loadLibrary();
@@ -97,7 +139,10 @@ export async function startContinuousDetection(video, onDetection, options = {})
   const {
     deviceId = null,
     throttleMs = 500,
+    signal,
   } = options;
+
+  signal?.throwIfAborted();
 
   if (getIsScanning()) {
     logger.warn('すでにスキャン中です');
@@ -107,6 +152,7 @@ export async function startContinuousDetection(video, onDetection, options = {})
   if (!getCodeReader()) {
     await initialize();
   }
+  signal?.throwIfAborted();
 
   setIsScanning(true);
   logger.debug('zxing:continuous:start');
@@ -116,11 +162,11 @@ export async function startContinuousDetection(video, onDetection, options = {})
       ? { deviceId: { exact: deviceId } }
       : true;
 
-    const control = await getCodeReader().decodeFromVideoDevice(
+    const decodePromise = getCodeReader().decodeFromVideoDevice(
       constraints,
       video,
       (result) => {
-        if (!result) {
+        if (!result || !getIsScanning()) {
           return;
         }
 
@@ -144,9 +190,16 @@ export async function startContinuousDetection(video, onDetection, options = {})
         onDetection([detection]);
       }
     );
+    const control = await waitForDecodeControl(decodePromise, signal);
 
     setCurrentDecodeControl(control);
   } catch (error) {
+    if (signal?.aborted) {
+      getCodeReader()?.reset?.();
+      setIsScanning(false);
+      throw getAbortReason(signal);
+    }
+
     logger.error('ZXing 連続検出エラー', error);
     setIsScanning(false);
     throw error;

@@ -45,7 +45,7 @@ export function startContinuousDetection(video, onDetection, options = {}) {
 
     try {
       const results = await detect(video);
-      if (results.length === 0) {
+      if (!getIsDetecting() || results.length === 0) {
         return;
       }
 

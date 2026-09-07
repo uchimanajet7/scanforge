@@ -22,23 +22,100 @@ import {
   CameraInUseError,
 } from './errors.js';
 
+const CAMERA_PERMISSION_STATES = new Set(['granted', 'prompt', 'denied']);
+
+function getAbortReason(signal) {
+  if (signal?.reason !== undefined) {
+    return signal.reason;
+  }
+  const error = new Error('The operation was aborted');
+  error.name = 'AbortError';
+  return error;
+}
+
+function stopStreamTracks(stream) {
+  stream?.getTracks?.().forEach(track => track.stop());
+}
+
+function clearPendingVideo(stream = null) {
+  const videoElement = getVideoElementState();
+  if (videoElement && (!stream || videoElement.srcObject === stream)) {
+    videoElement.srcObject = null;
+  }
+  clearVideoElement();
+  setCurrentDeviceIdState(null);
+  setState('scanner.stream', null);
+}
+
+async function getUserMediaWithSignal(constraints, signal) {
+  signal?.throwIfAborted();
+  const mediaPromise = navigator.mediaDevices.getUserMedia(constraints);
+  if (!signal) {
+    return mediaPromise;
+  }
+
+  let abortHandler = null;
+  const abortPromise = new Promise((_, reject) => {
+    abortHandler = () => reject(getAbortReason(signal));
+    if (signal.aborted) {
+      abortHandler();
+      return;
+    }
+    signal.addEventListener('abort', abortHandler, { once: true });
+  });
+
+  try {
+    const stream = await Promise.race([mediaPromise, abortPromise]);
+    signal.throwIfAborted();
+    return stream;
+  } catch (error) {
+    if (signal.aborted) {
+      mediaPromise.then(stopStreamTracks).catch(() => {});
+      throw getAbortReason(signal);
+    }
+    throw error;
+  } finally {
+    if (abortHandler) {
+      signal.removeEventListener('abort', abortHandler);
+    }
+  }
+}
+
+export async function getPermissionState() {
+  if (typeof navigator === 'undefined' || typeof navigator.permissions?.query !== 'function') {
+    return 'unknown';
+  }
+
+  try {
+    const permission = await navigator.permissions.query({ name: 'camera' });
+    return CAMERA_PERMISSION_STATES.has(permission?.state) ? permission.state : 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
 export async function start(video, options = {}) {
   const {
     deviceId = null,
     facingMode = 'environment',
     width = APP_CONFIG.VIDEO_IDEAL_WIDTH,
     height = APP_CONFIG.VIDEO_IDEAL_HEIGHT,
+    signal,
   } = options;
 
   logger.debug('camera:start', { deviceId, facingMode });
+  let acquiredStream = null;
 
   try {
+    signal?.throwIfAborted();
+
     if (!video) {
       throw new CameraNotFoundError('カメラ表示用のビデオ要素が見つかりません');
     }
 
     if (getMediaStream()) {
       await stop();
+      signal?.throwIfAborted();
     }
 
     setVideoElementState(video);
@@ -57,19 +134,21 @@ export async function start(video, options = {}) {
       constraints.video.facingMode = { ideal: facingMode };
     }
 
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    acquiredStream = await getUserMediaWithSignal(constraints, signal);
+    signal?.throwIfAborted();
 
     const videoElement = getVideoElementState();
     if (!videoElement) {
       throw new CameraNotFoundError('カメラ表示用のビデオ要素が見つかりません');
     }
 
-    videoElement.srcObject = stream;
+    videoElement.srcObject = acquiredStream;
     await videoElement.play();
+    signal?.throwIfAborted();
 
     let resolvedDeviceId = deviceId ?? null;
 
-    const videoTrack = stream.getVideoTracks()[0];
+    const videoTrack = acquiredStream.getVideoTracks()[0];
     if (videoTrack && typeof videoTrack.getSettings === 'function') {
       const settings = videoTrack.getSettings();
       if (settings && typeof settings.deviceId === 'string' && settings.deviceId.length > 0) {
@@ -84,17 +163,32 @@ export async function start(video, options = {}) {
       });
     }
 
-    setMediaStream(stream);
+    setMediaStream(acquiredStream);
     setCurrentDeviceIdState(resolvedDeviceId);
-    setState('scanner.stream', stream);
+    setState('scanner.stream', acquiredStream);
 
-    return stream;
+    return acquiredStream;
   } catch (error) {
-    logger.error('カメラ起動エラー', error);
+    if (acquiredStream) {
+      stopStreamTracks(acquiredStream);
+    }
+    if (!getMediaStream() || getMediaStream() === acquiredStream) {
+      clearMediaStream();
+      clearPendingVideo(acquiredStream);
+    }
+
+    if (signal?.aborted) {
+      throw getAbortReason(signal);
+    }
 
     if (error.name === 'NotAllowedError') {
+      logger.info('camera:permission-required');
       throw new CameraPermissionError('カメラへのアクセスが拒否されました');
-    } else if (error.name === 'NotFoundError') {
+    }
+
+    logger.error('カメラ起動エラー', error);
+
+    if (error.name === 'NotFoundError') {
       throw new CameraNotFoundError('カメラが見つかりません');
     } else if (error.name === 'NotReadableError') {
       throw new CameraInUseError('カメラが他のアプリで使用中です');

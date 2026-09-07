@@ -10,6 +10,10 @@ export const STATUS_MESSAGES = Object.freeze({
     primary: 'カメラを初期化しています…',
     secondary: 'ブラウザの権限ダイアログが表示される場合があります。',
   },
+  permissionDenied: {
+    primary: 'カメラへのアクセスが許可されていません。',
+    secondary: 'ブラウザーのサイト設定またはOSのカメラ設定で許可し、もう一度カメラを開始してください。',
+  },
   scanning: {
     primary: 'スキャン中です',
     secondary: 'コードをカメラにかざしてください。',

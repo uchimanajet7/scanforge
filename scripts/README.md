@@ -19,6 +19,15 @@
 - 自動バージョン: `bash scripts/tools/web/apply-cache-bust.sh`
 - 固定バージョン: `bash scripts/tools/web/apply-cache-bust.sh <VERSION>`
 
+### WebMCP成果物の直接受信
+
+- 受信モジュール: `scripts/tools/web/receive-scanforge-export.mjs`
+- Site toolsを呼ぶ同じJavaScript実行環境から使用し、生成PNG・SVGまたは履歴JSONを分割受信、保存、検証、解放します。
+- 出力先はScanForge内の `_local/_ai-agent/tmp/` 以下に限定されます。
+- ブラウザーダウンロード失敗後は、ダウンロードtoolが返した `preparedExport` を渡し、同じ `transferId` の成果物を受信します。
+- 契約テスト: `node --test tests/webmcp-export.test.mjs`
+- 通常利用による確認: `docs/WEB_DEV_GUIDE.md`
+
 ### ローカル API
 - `/encode`→`/decode` の往復を確認します。
 - 起動: `bash scripts/tools/api/start-local-api.sh`
