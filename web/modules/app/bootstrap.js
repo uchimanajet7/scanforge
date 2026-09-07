@@ -9,6 +9,7 @@ import { BUILD_INFO } from '../core/build-info.js';
 import { initUI } from '../ui/app-ui.js';
 import { initData } from '../data/lifecycle.js';
 import { initScanner } from '../scanner/controller.js';
+import { initWebMcp } from '../webmcp/index.js';
 import { setupInitialScreen } from './setup.js';
 
 /**
@@ -46,6 +47,10 @@ export async function initApp() {
     logger.debug('setupInitialScreen開始');
     await setupInitialScreen();
     logger.debug('setupInitialScreen完了');
+
+    logger.debug('initWebMcp開始');
+    await initWebMcp();
+    logger.debug('initWebMcp完了');
 
     const endTime = performance.now();
     const duration = ((endTime - startTime) / 1000).toFixed(2);

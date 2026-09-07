@@ -15,6 +15,10 @@ function isCameraActive() {
   return camera.isActive();
 }
 
+function getScannerStatus() {
+  return getState('scanner.status');
+}
+
 function getDebugInfo() {
   return {
     scanMode: getScanMode(),
@@ -26,4 +30,4 @@ function getDebugInfo() {
   };
 }
 
-export { getDebugInfo, getScanMode, isCameraActive, isScanning };
+export { getDebugInfo, getScanMode, getScannerStatus, isCameraActive, isScanning };

@@ -1,34 +1,15 @@
-import { getState } from '../context.js';
 import { elements } from '../dom-cache.js';
 import { toast, logger } from '../feedback.js';
 import { canCopyPng } from '../preview/state.js';
-import { buildDownloadName } from '../render/orchestrator.js';
+import { getState } from '../context.js';
+import { requestCurrentPreviewDownload } from './download-current-preview.js';
 
 export function createOutputActions() {
   function handleDownload() {
-    const preview = getState().preview;
-    if (!preview) {
+    const result = requestCurrentPreviewDownload();
+    if (!result) {
       toast.error('ダウンロード可能なデータがありません。');
-      return;
     }
-    let blob;
-    if (preview.output === 'svg') {
-      blob = new Blob([preview.svgText], { type: 'image/svg+xml' });
-    } else if (preview.pngBlob) {
-      blob = preview.pngBlob;
-    }
-    if (!blob) {
-      toast.error('ダウンロード可能なデータがありません。');
-      return;
-    }
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = buildDownloadName(preview);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
   }
 
   async function handleCopyOutput() {
